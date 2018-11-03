@@ -1,27 +1,28 @@
 package module_4;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Lessons {
     protected static Scanner scanner;
 
-
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
 
-        //Lesson_2();
         //Lesson_3();
         //Lesson_4();
-        //Lesson_6_1();
-        //Lesson_6_2();
-        Lesson_6_3();
+        //Lesson_5();
+        //Lesson_7_1();
+        //Lesson_7_2();
+        //Lesson_7_3();
+        //Lesson_7_4();
+        Lesson_8();
     }
 
-    private static void Lesson_2(){
+    private static void Lesson_3(){
 
         System.out.println(24.0*0.1);
 
@@ -31,7 +32,7 @@ public class Lessons {
         //double  64 бит	от -4.9e-324 до 1.7e+308
     }
 
-    private static void Lesson_3(){
+    private static void Lesson_4(){
         String countStr = scanner.nextLine();
 
         // way 1
@@ -60,7 +61,7 @@ public class Lessons {
         System.out.println("total: box = " + countBox + ", container = " + countContainer_ + ", track = " + countTrack_);
     }
 
-    private static void Lesson_4(){
+    private static void Lesson_5(){
         for (int i = 0; i <= 512; i++){
             System.out.print((char) i + "|");
             if (i%100 == 0) System.out.println();
@@ -88,7 +89,7 @@ public class Lessons {
         System.out.print("Фамилия: " + fio[0] + "\nИмя: " + fio[1] + "\nОтчество: " + fio[2]);
     }
 
-    private static void Lesson_6_1(){
+    private static void Lesson_7_1(){
         // https://www.freeformatter.com/java-regex-tester.html#ad-output
         String text = "Вася заработал 5000 рублей, Петя - 7563 рубля, а Маша - 30000 рублей";
         System.out.println(text);
@@ -113,7 +114,7 @@ public class Lessons {
         System.out.println("Общая сумма заработка '" + total + "'");
     }
 
-    private static void Lesson_6_2(){
+    private static void Lesson_7_2(){
         String engl_text = "Splits the given input sequence around matches of this pattern.\n" +
                 "The array returned by this method contains each substring of the input sequence that is terminated by another subsequence that matches this pattern or is terminated by the end of the input sequence. The substrings in the array are in the order in which they occur in the input. If this pattern does not match any subsequence of the input then the resulting array has just one element, namely the input sequence in string form.\n" +
                 "\n" +
@@ -133,7 +134,7 @@ public class Lessons {
 
     }
 
-    private static void Lesson_6_3(){
+    private static void Lesson_7_3(){
         System.out.print("\nВведите ФИО: ");
         String names = scanner.nextLine();
         String[] fio = names.split(" ");
@@ -149,7 +150,56 @@ public class Lessons {
         System.out.print("Фамилия: " + names_.get(0) + "\nИмя: " + names_.get(1) + "\nОтчество: " + names_.get(2));
     }
 
-    private static void Lesson_6_4(){
+    private static void Lesson_7_4(){
+        System.out.print("\nВведите номер телефона: ");
+        String phone = scanner.nextLine();
 
+        System.out.println("result: " + getPhoneNumber(phone));
+    }
+
+    // подбор шаблона телефона
+    private static String getPhoneNumber(String telNum){
+        if (checkPhoneNumber(telNum))
+            return telNum.replaceAll("[\\s()-]", "");
+        throw new IllegalArgumentException("Please write correct number.");
+    }
+    private static boolean checkPhoneNumber(String telNum){
+        // https://www.freeformatter.com/java-regex-tester.html#ad-output
+
+        // проверяем верно ли количество цифр
+        Pattern p = Pattern.compile("^(\\+7|8)[0-9]{10}");  // ********** x10
+        Matcher m = p.matcher(telNum.replaceAll("[\\s()-]", ""));
+        if (!m.matches()) {
+            System.out.println("Wrong num count! Please write correct number. (" +telNum.replaceAll("[\\s()-]", "") + ")");
+            return false;
+        }
+        // p = Pattern.compile("^[(][0-9]{3}[)][0-9]{7}$");  // (***)*******
+        // p = Pattern.compile("^.[0-9]{3}.[0-9]{7}$");  // (***)*******
+        p = Pattern.compile("\\+?[7,8]{1}[\\s]*[(\\s-]?[0-9]{3}[\\s]*[)\\s-]?[\\s]*[0-9]{2,3}[\\s-]?[0-9]{2,3}[\\s-]?[0-9]{2,3}");
+        //  +*(***)*******|*(***)*******|+*(***)*** ** **|* *** *** ** **|+*-***-***-**-** и другие... да, я писал это сам
+        m = p.matcher(telNum);
+        if (m.matches()) {
+            return true;
+        }
+
+        System.out.println("telephone format undetected here, please try another format!");
+        return false;
+    }
+
+    private static void Lesson_8() {
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(1994, Calendar.JULY, 22);
+        //cal.add(Calendar.DAY_OF_MONTH, 1);
+        Date date = cal.getTime();
+        System.out.println(date + " " + cal.get(Calendar.DAY_OF_WEEK));
+
+        int count = 0;
+        do {
+            DateFormat format = new SimpleDateFormat("dd.MM.yyyy - EEEE");
+            System.out.println("Time of life (" + count++ + "):\t" + format.format(cal.getTime()));
+
+            cal.add(Calendar.YEAR, 1);
+        } while (cal.getTimeInMillis() < Calendar.getInstance().getTimeInMillis());
     }
 }
