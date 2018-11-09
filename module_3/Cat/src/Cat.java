@@ -7,26 +7,16 @@ public class Cat
     private Double originWeight;
     private Double weight;
 
-    private Double minWeight;
-    private Double maxWeight;
+    private Double minWeight = 1000.0;
+    private Double maxWeight = 9000.0;
     private String name;
     private boolean alive = true;
 
-    public Cat(String name)
-    {
-        weight = 1500.0 + 3000.0 * Math.random();
-        originWeight = weight;
-        minWeight = 1000.0;
-        maxWeight = 9000.0;
-        this.name = name;
-        count++;
+    public Cat(String name) {
+        this(name, 1500.0 + 3000.0 * Math.random());
     }
-    public Cat(String name, Double weight)
-    {
-        this.weight = weight;
-        originWeight = weight;
-        minWeight = 1000.0;
-        maxWeight = 9000.0;
+    public Cat(String name, Double weight) {
+        this.weight = originWeight = weight;
         this.name = name;
         count++;
     }
