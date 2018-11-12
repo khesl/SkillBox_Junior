@@ -23,7 +23,8 @@ public class Lessons {
         //Lesson_2_2();
         //Lesson2_3();
         //Lesson_3();
-        Lesson_4_1();
+        //Lesson_4_1();
+        Lesson_4_2();
     }
 
     private static void Lesson_1(){
@@ -332,6 +333,7 @@ public class Lessons {
         System.out.println(ConsoleColor.setColor("robot# See you later!", ConsoleColor.ANSI_BLUE));
     }
 
+    private static Map<String, String> contacts = new TreeMap<>();
     private static void Lesson_4_2(){
         //- Написать умный эмулятор телефонной книги. Если в неё ввести новое имя, она должна запросить номер телефона.
         // Если в неё ввести новый номер телефона, должна запросить имя. Если введённое имя или номер телефона найдены,
@@ -344,52 +346,108 @@ public class Lessons {
 
         while (!(in = scanner.nextLine()).equals("exit")){
             if (in.equals("LIST")){
-                if (cars.size() == 0) {System.out.println(ConsoleColor.setColor("robot# sorry we have no any cars here.", ConsoleColor.Color.ANSI_YELLOW));
+                if (contacts.size() == 0) {System.out.println(ConsoleColor.setColor("robot# sorry we have no any contact here.", ConsoleColor.Color.ANSI_YELLOW));
                     System.out.println(ConsoleColor.setColor("robot# Try to read new information. (LIST, exit)", ConsoleColor.Color.ANSI_YELLOW));
                     System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
                     continue;
                 }
                 System.out.println(ConsoleColor.setColor("robot# Hello, now in storage:", ConsoleColor.Color.ANSI_YELLOW));
-                for (Map.Entry entry : cars.entrySet()) System.out.println("\t" +
+                for (Map.Entry entry : contacts.entrySet())
+                    System.out.println("\t" +
                         ConsoleColor.setColor(String.valueOf(entry.getKey() + " : " + entry.getValue()), ConsoleColor.Color.ANSI_RED));
             }
             /*просто ввод*/
             else {
-                Pattern p = Pattern.compile("[0-9]");
-                Matcher m = p.matcher(in);
+                String phone = in;
+                String key;
+                String value;
 
-                if (!m.find()) {
-                    System.out.println(ConsoleColor.setColor("robot# Please use numeric for number.", ConsoleColor.Color.ANSI_YELLOW));
+                if (in.equals("")){
                     System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
                     continue;
                 }
-                int key = Integer.valueOf(in);
-                // если есть такой
-                if (cars.containsKey(key)) {
-                    System.out.print(ConsoleColor.setColor("robot# we have that car number. ", ConsoleColor.Color.ANSI_YELLOW));
-                    System.out.println(ConsoleColor.setColor("It's issurer '", ConsoleColor.Color.ANSI_YELLOW) +
-                            ConsoleColor.setColor(cars.get(key), ConsoleColor.Color.ANSI_BLUE) +
-                            ConsoleColor.setColor("'", ConsoleColor.Color.ANSI_YELLOW));
+                // если есть такой по ключу
+                if (checkPhoneNumber(phone) ? contacts.containsKey(phone) : contacts.containsValue(phone)) {
+                    if (checkPhoneNumber(phone)){
+                        key = phone;
+                        value = contacts.get(phone);
+                    } else {
+                        value = phone;
+                        key = "";
+                        for (Map.Entry entry : contacts.entrySet())
+                            if (entry.getValue().equals(value)){
+                                key = (String) entry.getKey();
+                                break;
+                            }
+                    }
+                    System.out.print(ConsoleColor.setColor("robot# we have that contact number. ", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.println(ConsoleColor.setColor("\t'", ConsoleColor.Color.ANSI_YELLOW) +
+                            ConsoleColor.setColor(value, ConsoleColor.Color.ANSI_BLUE) +
+                            ConsoleColor.setColor("' ", ConsoleColor.Color.ANSI_YELLOW) +
+                            ConsoleColor.setColor(key, ConsoleColor.Color.ANSI_BLUE));
                     System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
                     continue;
                 }
-                System.out.println(ConsoleColor.setColor("robot# Please now set the Name.", ConsoleColor.Color.ANSI_YELLOW));
-                System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
-                in = scanner.nextLine();
+
+                if (checkPhoneNumber(phone)){
+                    key = getPhoneNumber(phone);
+                    System.out.println(ConsoleColor.setColor("robot# Please now write Name.", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                    value = scanner.nextLine();
+                } else {
+                    value = phone;
+                    System.out.println(ConsoleColor.setColor("robot# Please now write number.", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                    key = scanner.nextLine();
+                    if (!checkPhoneNumber(key)){
+                        System.out.println(ConsoleColor.setColor("robot# wrong number format. Try more.", ConsoleColor.Color.ANSI_YELLOW));
+                        System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                        key = scanner.nextLine();
+                        if (!checkPhoneNumber(key)) continue;
+                    }
+                }
 
                 // если нет такого
-                cars.put(key, in);
-                System.out.println(ConsoleColor.setColor("robot# List has a new cars: '", ConsoleColor.Color.ANSI_YELLOW) +
+                contacts.put(key, value);
+                System.out.println(ConsoleColor.setColor("robot# List has a new contact: '", ConsoleColor.Color.ANSI_YELLOW) +
                         ConsoleColor.setColor(in, ConsoleColor.Color.ANSI_BLUE) +
-                        ConsoleColor.setColor("', new cars count (", ConsoleColor.Color.ANSI_YELLOW) +
-                        ConsoleColor.setColor(String.valueOf(cars.size()), ConsoleColor.Color.ANSI_BLUE) +
+                        ConsoleColor.setColor("', new contacts count (", ConsoleColor.Color.ANSI_YELLOW) +
+                        ConsoleColor.setColor(String.valueOf(contacts.size()), ConsoleColor.Color.ANSI_BLUE) +
                         ConsoleColor.setColor(");", ConsoleColor.Color.ANSI_YELLOW));
             }
 
             System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
         }
         System.out.println(ConsoleColor.setColor("robot# See you later!", ConsoleColor.ANSI_BLUE));
+    }
 
+    // подбор шаблона телефона
+    private static String getPhoneNumber(String telNum){
+        if (checkPhoneNumber(telNum))
+            return telNum.replaceAll("[\\s()-]", "");
+        throw new IllegalArgumentException("Please write correct number.");
+    }
+    private static boolean checkPhoneNumber(String telNum){
+        // https://www.freeformatter.com/java-regex-tester.html#ad-output
+
+        // проверяем верно ли количество цифр
+        Pattern p = Pattern.compile("^(\\+7|8)[0-9]{10}");  // ********** x10
+        Matcher m = p.matcher(telNum.replaceAll("[\\s()-]", ""));
+        if (!m.matches()) {
+            //System.out.println("Wrong num count! Please write correct number. (" +telNum.replaceAll("[\\s()-]", "") + ")");
+            return false;
+        }
+        // p = Pattern.compile("^[(][0-9]{3}[)][0-9]{7}$");  // (***)*******
+        // p = Pattern.compile("^.[0-9]{3}.[0-9]{7}$");  // (***)*******
+        p = Pattern.compile("\\+?[7,8]{1}[\\s]*[(\\s-]?[0-9]{3}[\\s]*[)\\s-]?[\\s]*[0-9]{2,3}[\\s-]?[0-9]{2,3}[\\s-]?[0-9]{2,3}");
+        //  +*(***)*******|*(***)*******|+*(***)*** ** **|* *** *** ** **|+*-***-***-**-** и другие... да, я писал это сам
+        m = p.matcher(telNum);
+        if (m.matches()) {
+            return true;
+        }
+
+        System.out.println("telephone format undetected here, please try another format!");
+        return false;
     }
 
 }
