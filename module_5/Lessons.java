@@ -7,10 +7,9 @@ import org.javagram.response.object.UserContact;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Lessons {
@@ -22,7 +21,9 @@ public class Lessons {
         //Lesson_1();
         //Lesson_2_1();
         //Lesson_2_2();
-        Lesson2_3();
+        //Lesson2_3();
+        //Lesson_3();
+        Lesson_4_1();
     }
 
     private static void Lesson_1(){
@@ -238,6 +239,156 @@ public class Lessons {
         for (UserContact contact : proj.getTelegramApiBridge().contactsGetContacts())
             System.out.println(ConsoleColor.setColor(contact.getFirstName() + " "
                     + contact.getLastName() + " " + contact.getPhone(), ConsoleColor.ANSI_BLUE));
+
+    }
+
+    private static void Lesson_3(){
+        //- Написать программу, в которую можно добавлять через консоль и хранить перечень лекарств,
+        // а также распечатывать весь их список командой LIST.
+        String in = "";
+        System.out.println(ConsoleColor.setColor("robot# Hello, what do want? (LIST, exit)", ConsoleColor.Color.ANSI_YELLOW));
+        System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+        Set<String> medical = new HashSet<>();
+        while (!(in = scanner.nextLine()).equals("exit")){
+            if (in.equals("LIST")){
+                if (medical.size() == 0) {System.out.println(ConsoleColor.setColor("robot# sorry we have no any medicine here.", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.println(ConsoleColor.setColor("robot# Try to read new information. (LIST, exit)", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                    continue;
+                }
+                System.out.println(ConsoleColor.setColor("robot# Hello, now in storage:", ConsoleColor.Color.ANSI_YELLOW));
+                for (String str : medical) System.out.println("\t" + ConsoleColor.setColor(str, ConsoleColor.Color.ANSI_RED));
+            }
+            /*просто ввод*/
+            else {
+                medical.add(in);
+                System.out.println(ConsoleColor.setColor("robot# List has a new medicine: '", ConsoleColor.Color.ANSI_YELLOW) +
+                        ConsoleColor.setColor(in, ConsoleColor.Color.ANSI_BLUE) +
+                        ConsoleColor.setColor("', new medicine count (", ConsoleColor.Color.ANSI_YELLOW) +
+                        ConsoleColor.setColor(String.valueOf(medical.size()), ConsoleColor.Color.ANSI_BLUE) +
+                        ConsoleColor.setColor(");", ConsoleColor.Color.ANSI_YELLOW));
+            }
+
+            System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+        }
+        System.out.println(ConsoleColor.setColor("robot# See you later!", ConsoleColor.ANSI_BLUE));
+    }
+
+    private static Map<Integer, String> cars = new TreeMap<>();
+    private static void Lesson_4_1(){
+        //- Написать программу, которая будет выдавать имя владельца автомобиля по его номеру.
+        // Программа должна быть умной: если у неё в памяти номера нет, она должна попросить ввести его имя и запомнить.
+
+        String in = "";
+        System.out.println(ConsoleColor.setColor("robot# Hello, what do want? (LIST, exit)", ConsoleColor.Color.ANSI_YELLOW));
+        System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+
+        while (!(in = scanner.nextLine()).equals("exit")){
+            if (in.equals("LIST")){
+                if (cars.size() == 0) {System.out.println(ConsoleColor.setColor("robot# sorry we have no any cars here.", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.println(ConsoleColor.setColor("robot# Try to read new information. (LIST, exit)", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                    continue;
+                }
+                System.out.println(ConsoleColor.setColor("robot# Hello, now in storage:", ConsoleColor.Color.ANSI_YELLOW));
+                for (Map.Entry entry : cars.entrySet()) System.out.println("\t" +
+                        ConsoleColor.setColor(String.valueOf(entry.getKey() + " : " + entry.getValue()), ConsoleColor.Color.ANSI_RED));
+            }
+            /*просто ввод*/
+            else {
+                Pattern p = Pattern.compile("[0-9]");
+                Matcher m = p.matcher(in);
+
+                if (!m.find()) {
+                    System.out.println(ConsoleColor.setColor("robot# Please use numeric for number.", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                    continue;
+                }
+                int key = Integer.valueOf(in);
+                // если есть такой
+                if (cars.containsKey(key)) {
+                    System.out.print(ConsoleColor.setColor("robot# we have that car number. ", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.println(ConsoleColor.setColor("It's issurer '", ConsoleColor.Color.ANSI_YELLOW) +
+                            ConsoleColor.setColor(cars.get(key), ConsoleColor.Color.ANSI_BLUE) +
+                            ConsoleColor.setColor("'", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                    continue;
+                }
+                System.out.println(ConsoleColor.setColor("robot# Please now set the Name.", ConsoleColor.Color.ANSI_YELLOW));
+                System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                in = scanner.nextLine();
+
+                // если нет такого
+                cars.put(key, in);
+                System.out.println(ConsoleColor.setColor("robot# List has a new cars: '", ConsoleColor.Color.ANSI_YELLOW) +
+                        ConsoleColor.setColor(in, ConsoleColor.Color.ANSI_BLUE) +
+                        ConsoleColor.setColor("', new cars count (", ConsoleColor.Color.ANSI_YELLOW) +
+                        ConsoleColor.setColor(String.valueOf(cars.size()), ConsoleColor.Color.ANSI_BLUE) +
+                        ConsoleColor.setColor(");", ConsoleColor.Color.ANSI_YELLOW));
+            }
+
+            System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+        }
+        System.out.println(ConsoleColor.setColor("robot# See you later!", ConsoleColor.ANSI_BLUE));
+    }
+
+    private static void Lesson_4_2(){
+        //- Написать умный эмулятор телефонной книги. Если в неё ввести новое имя, она должна запросить номер телефона.
+        // Если в неё ввести новый номер телефона, должна запросить имя. Если введённое имя или номер телефона найдены,
+        // должна вывести дополнительную информацию: номер или имя, соответственно.
+        // Команда LIST должна выводить всех абонентов в алфавитном порядке с номерами телефонов.
+
+        String in = "";
+        System.out.println(ConsoleColor.setColor("robot# Hello, what do want? (LIST, exit)", ConsoleColor.Color.ANSI_YELLOW));
+        System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+
+        while (!(in = scanner.nextLine()).equals("exit")){
+            if (in.equals("LIST")){
+                if (cars.size() == 0) {System.out.println(ConsoleColor.setColor("robot# sorry we have no any cars here.", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.println(ConsoleColor.setColor("robot# Try to read new information. (LIST, exit)", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                    continue;
+                }
+                System.out.println(ConsoleColor.setColor("robot# Hello, now in storage:", ConsoleColor.Color.ANSI_YELLOW));
+                for (Map.Entry entry : cars.entrySet()) System.out.println("\t" +
+                        ConsoleColor.setColor(String.valueOf(entry.getKey() + " : " + entry.getValue()), ConsoleColor.Color.ANSI_RED));
+            }
+            /*просто ввод*/
+            else {
+                Pattern p = Pattern.compile("[0-9]");
+                Matcher m = p.matcher(in);
+
+                if (!m.find()) {
+                    System.out.println(ConsoleColor.setColor("robot# Please use numeric for number.", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                    continue;
+                }
+                int key = Integer.valueOf(in);
+                // если есть такой
+                if (cars.containsKey(key)) {
+                    System.out.print(ConsoleColor.setColor("robot# we have that car number. ", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.println(ConsoleColor.setColor("It's issurer '", ConsoleColor.Color.ANSI_YELLOW) +
+                            ConsoleColor.setColor(cars.get(key), ConsoleColor.Color.ANSI_BLUE) +
+                            ConsoleColor.setColor("'", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                    continue;
+                }
+                System.out.println(ConsoleColor.setColor("robot# Please now set the Name.", ConsoleColor.Color.ANSI_YELLOW));
+                System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                in = scanner.nextLine();
+
+                // если нет такого
+                cars.put(key, in);
+                System.out.println(ConsoleColor.setColor("robot# List has a new cars: '", ConsoleColor.Color.ANSI_YELLOW) +
+                        ConsoleColor.setColor(in, ConsoleColor.Color.ANSI_BLUE) +
+                        ConsoleColor.setColor("', new cars count (", ConsoleColor.Color.ANSI_YELLOW) +
+                        ConsoleColor.setColor(String.valueOf(cars.size()), ConsoleColor.Color.ANSI_BLUE) +
+                        ConsoleColor.setColor(");", ConsoleColor.Color.ANSI_YELLOW));
+            }
+
+            System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+        }
+        System.out.println(ConsoleColor.setColor("robot# See you later!", ConsoleColor.ANSI_BLUE));
 
     }
 
