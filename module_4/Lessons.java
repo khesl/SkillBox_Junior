@@ -1,5 +1,7 @@
 package module_4;
 
+import Utils.ConsoleColor;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -14,25 +16,53 @@ public class Lessons {
 
         //Lesson_3();
         //Lesson_4();
-        //Lesson_5();
+        Lesson_5();
         //Lesson_7_1();
         //Lesson_7_2();
         //Lesson_7_3();
         //Lesson_7_4();
-        Lesson_8();
+        //Lesson_8();
     }
 
+    /**
+     * Вам осталось прокомментировать результат  24.0 * 0.1 подробнее
+     *
+     * ---
+     * описал внутри метода.
+     * */
     private static void Lesson_3(){
 
-        System.out.println(24.0*0.1);
+        System.out.println("24.0*0.1=" + 24.0*0.1); // 2.4000000000000004
+        System.out.println("24.0f*0.1f=" + 24.0f*0.1f); // 2.4
+        System.out.println("24.0d*0.1d=" + 24.0d*0.1d); // 2.4
 
+        /**
+         * данный результат появляется т.к. без явного указания типа он принимается как Double - вещественное число с плавающей точкой,
+         * артефакты появляются при вычислениях в большой точности, т.к. компьютер работает не в десятичной системе исчисления,
+         * а в двоичной - операции с дробными числами выполняются другими методами.
+         * */
+
+        System.out.println("Short: " + Short.MIN_VALUE  + "<->" + Short.MAX_VALUE);
         //short   16 бит    от -32768 до 32767
+        System.out.println("Long: " + Long.MIN_VALUE + "<->" + Long.MAX_VALUE);
         //long    64 бит	от -9223372036854775808L до 9223372036854775807L
+        System.out.println("Float: " + Float.MIN_VALUE + "<->" + Float.MAX_VALUE);
         //float   32 бит	от -1.4e-45f до 3.4e+38f
+        System.out.println("Double: " + Double.MIN_VALUE + "<->" + Double.MAX_VALUE);
         //double  64 бит	от -4.9e-324 до 1.7e+308
     }
 
+    /** Назовите, пожалуйста, переменные таким образом, чтобы было понятно их назначение.
+     * Проинициализируйте их в условии. Затем необходимо через консоль запросить у пользователя
+     * количество ящиков и в зависимости от этого производить расчет. Необходимо переделать.
+     *
+     * ---
+     * Не вижу проблем с названием переменных, но всё равно переименовал, что может быть более говорящим чем 'countBox' или 'currentBox'?
+     * Расчет данных и так происходит после ввода пользователя.. Теперь более пользователе ориентированно
+     * */
     private static void Lesson_4(){
+        System.out.println(ConsoleColor.setColor("robot# Введите количество коннтейнеров.", ConsoleColor.Color.ANSI_YELLOW));
+        System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
         String countStr = scanner.nextLine();
 
         // way 1
@@ -43,24 +73,32 @@ public class Lessons {
 
         // way 2
         System.out.println("-------------");
-        int cur = 0;
-        int countContainer_ = 1;
-        int countTrack_ = 1;
-        System.out.println("Грузовик " + countTrack_ + ":");
-        System.out.println("\tКонтейнер " + countContainer_ + ":");
-        while (++cur <= countBox){
-            System.out.println("\t\tЯщик " + cur);
-            if (cur%27 == 0){
-                countContainer_++;
-                if (countContainer_%12 == 0){ countTrack_++;
-                    System.out.println("Грузовик " + countTrack_ + ":");
+        int currentBox = 0;
+        int currentContainer = 1;
+        int currentTrack = 1;
+        System.out.println("Грузовик " + currentTrack + ":");
+        System.out.println("\tКонтейнер " + currentContainer + ":");
+        while (++currentBox <= countBox){
+            System.out.println("\t\tЯщик " + currentBox);
+            if (currentBox%27 == 0){
+                currentContainer++;
+                if (currentContainer%12 == 0){ currentTrack++;
+                    System.out.println("Грузовик " + currentTrack + ":");
                 }
-                System.out.println("\tКонтейнер " + countContainer_ + ":");
+                System.out.println("\tКонтейнер " + currentContainer + ":");
             }
         }
-        System.out.println("total: box = " + countBox + ", container = " + countContainer_ + ", track = " + countTrack_);
+        System.out.println("total: box = " + countBox + ", container = " + currentContainer + ", track = " + currentTrack);
     }
 
+    /**
+     *    1) Принято
+     *    2) Попробуйте акцентрироваться именно на пробелах. Имена искать не нужно.
+     *    3) Все верно. Принято.
+     *
+     * ---
+     * Не совсем понятно требуется ли от меня что-то? Задача выполнена,
+     * */
     private static void Lesson_5(){
         for (int i = 0; i <= 512; i++){
             System.out.print((char) i + "|");
@@ -74,14 +112,33 @@ public class Lessons {
 
         String text = "Вася заработал 5000 рублей, Петя - 7563 рубля, а Маша - 30000 рублей";
         System.out.println("\n" + text);
-        double firstAmount = Double.parseDouble(text.substring(text.indexOf("Вася заработал")
+        // 1 way
+       /* double firstAmount = Double.parseDouble(text.substring(text.indexOf("Вася заработал")
                 + "Вася заработал".length(), text.indexOf("рублей, Петя")).trim());
         double secondAmount = Double.parseDouble(text.substring(text.indexOf("рублей, Петя -")
                 + "рублей, Петя -".length(), text.indexOf("рубля, а Маша")).trim());
         double thirdAmount = Double.parseDouble(text.substring(text.indexOf("рубля, а Маша -")
                 + "рубля, а Маша -".length(), text.lastIndexOf("рублей")).trim());
         System.out.println("Зарплаты: " + firstAmount + ", " + secondAmount + ", "+ thirdAmount);
-        System.out.println("Сумма: " + (firstAmount + secondAmount + thirdAmount));
+        System.out.println("Сумма: " + (firstAmount + secondAmount + thirdAmount));*/
+        // 2 way
+        // исправить
+        List<Double> salarys = new ArrayList<>();
+        String temp = text;
+        while (temp.contains(" ")){
+            String word = temp.substring(0, temp.indexOf(" "));
+            try { salarys.add(Double.valueOf(word)); }
+            catch (Exception e){ continue; }
+            temp = temp.substring(0, temp.indexOf(" ")+1);
+        }
+        System.out.print("Зарплаты: ");
+        double summ = 0;
+        for (double salary : salarys) {
+            summ += salary;
+            System.out.print(salary + ", ");
+        }
+        System.out.println("Сумма: " + summ);
+
 
         System.out.print("\nА теперь введите ФИО: ");
         String names = scanner.nextLine();

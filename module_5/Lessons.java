@@ -11,7 +11,6 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public class Lessons {
     private static Scanner scanner;
 
@@ -24,7 +23,8 @@ public class Lessons {
         //Lesson2_3();
         //Lesson_3();
         //Lesson_4_1();
-        Lesson_4_2();
+        //Lesson_4_2();
+        Lesson_5();
     }
 
     private static void Lesson_1(){
@@ -240,7 +240,6 @@ public class Lessons {
         for (UserContact contact : proj.getTelegramApiBridge().contactsGetContacts())
             System.out.println(ConsoleColor.setColor(contact.getFirstName() + " "
                     + contact.getLastName() + " " + contact.getPhone(), ConsoleColor.ANSI_BLUE));
-
     }
 
     private static void Lesson_3(){
@@ -352,9 +351,14 @@ public class Lessons {
                     continue;
                 }
                 System.out.println(ConsoleColor.setColor("robot# Hello, now in storage:", ConsoleColor.Color.ANSI_YELLOW));
+                Set<String> tempSet = new TreeSet<>();
                 for (Map.Entry entry : contacts.entrySet())
+                    tempSet.add(entry.getValue() + " (" + entry.getKey() + ")");
+                // выводим отсортированные по значению. А не по ключу как в TreeMap.
+                for (String str : tempSet) System.out.println("\t" + ConsoleColor.setColor(str, ConsoleColor.Color.ANSI_RED));
+                /*for (Map.Entry entry : contacts.entrySet())
                     System.out.println("\t" +
-                        ConsoleColor.setColor(String.valueOf(entry.getKey() + " : " + entry.getValue()), ConsoleColor.Color.ANSI_RED));
+                        ConsoleColor.setColor(String.valueOf(entry.getKey() + " : " + entry.getValue()), ConsoleColor.Color.ANSI_RED));*/
             }
             /*просто ввод*/
             else {
@@ -448,6 +452,125 @@ public class Lessons {
 
         System.out.println("telephone format undetected here, please try another format!");
         return false;
+    }
+
+    private static List<String> carNum = new ArrayList<>();
+    private static Set<String> carNumHash = new HashSet<>();
+    private static Set<String> carNumTree = new TreeSet<>();
+    private static void Lesson_5() throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        //- Сделать детектор блатных номеров для ГИБДД (все регионы):
+        // сгенерировать список номеров и сделать метод, который будет проверять наличие номера в списке.
+        // Программа должна работать через консоль: запрашивать номер, проверять,
+        // выдавать результат проверки и снова запрашивать номер. Результат должен выдаваться
+        // в таком формате: false (26 ms).
+
+        //- В задаче с детектором блатных номеров сделать дополнительно бинарный поиск,
+        // поиск с помощью HashSet и с помощью TreeSet. Измерить и сравнить длительность 4­х
+        // видов поиска и написать результат в качестве решения домашнего задания.
+
+
+        List<Integer> regNums = new ArrayList<>();
+        char[] serChar = {'А', 'В', 'Е', 'К', 'М', 'Н', 'О', 'Р', 'С', 'Т', 'У', 'Х'};
+
+        for (int i = 1; i <= 95; i++) regNums.add(i);
+        for (int i : new int[] {99, 97, 177, 199, 197, 777, 799, 150, 190, 750, 124, 98, 178, 198, 123, 159, 138, 163, 763, 96, 196, 116, 716})
+            regNums.add(i);
+
+        System.out.print("Start generating number...  ");
+        long startTime = System.currentTimeMillis();
+        for (int reg : regNums)
+            for (char ser_1 : serChar)
+                for (char ser_2 : serChar)
+                    for (char ser_3 : serChar)
+                        for (int i = 0; i < 500; i++) /** генерирую только половину номеров*/
+                            if ((ser_2 == ser_3) || (i/100 == (i%100)/10 && i/100 == i%10)) {
+                                /** изменил правило поиска красивых || вместо && для увеличения количества при тесте времени */
+                                String temp = String.valueOf(ser_1) + (i < 10 ? ("00" + String.valueOf(i)) : i < 100 ? "0" + String.valueOf(i) : i) +
+                                        String.valueOf(ser_2) + String.valueOf(ser_3) + "_" + (reg < 10 ? "0" + reg : reg);
+                                carNum.add(temp);
+                                carNumHash.add(temp);
+                                carNumTree.add(temp);
+                            }
+        long generateTime = System.currentTimeMillis() - startTime;
+        System.out.println("Generating for spec (thieves') num (" + generateTime + " mls)");
+        System.out.println("Total nums: " + carNum.size());
+        System.out.println("Случайный блатной номер: '" + carNum.get((int)(Math.random()*carNum.size())) + "'");
+        Collections.sort(carNum);
+
+        //fourthSearch("999");
+
+        for (;;) {
+            System.out.print("Введите номер автотранспорта: ");
+            String num = reader.readLine().trim();
+
+            startTime = System.currentTimeMillis();
+            iterCount = 0;
+            if (search(carNum, num)) System.out.print("Это блатной номер!");
+            else System.out.print("Это обычный номер.");
+            long searchTime = System.currentTimeMillis() - startTime;
+            startTime = System.currentTimeMillis();
+            boolean standartSearch = carNum.contains(num); // другой способ поиска
+            long searchTime_2 = System.currentTimeMillis() - startTime;
+            System.out.println (ConsoleColor.setColor(" ("+ searchTime +" ms), найден за (" + iterCount + ") итераций(ии)", ConsoleColor.Color.ANSI_CYAN));
+            System.out.println (ConsoleColor.setColor("Поиск через List.contains(): " + standartSearch + " ("+ searchTime_2 +" ms)", ConsoleColor.ANSI_YELLOW));
+            fourthSearch(num);
+        }
+    }
+
+    /** Последний проверочный вызов программы. Естественно тут выводы что поиск через List.contains слегка быстрее перебора
+     * тогда как бинарный поиск или поиск через Hash или Tree линейны и тратят минимальное время.
+     *
+     * Start generating number...  Generating for spec (thieves') num (33212 mls)
+     * Total nums: 9430560
+     * Случайный блатной номер: 'О333УС_14'
+     * Введите номер автотранспорта: 999
+     * Это обычный номер. (1 ms), найден за (24) итераций(ии)
+     * Поиск через List.contains(): false (163 ms)
+     *
+     * classic not found.	 classicSearchTime (153);
+     * listSet not found.	 listSearchTime (140);
+     * binary not found.	 binarySearchTime (0);
+     * hashSet not found.	 hashSetSearchTime (0);
+     * treeSet not found.	 treeSetSearchTime (0);
+     * */
+
+    private static void fourthSearch(String val){
+        System.out.println();
+        long startTime = System.currentTimeMillis();
+        boolean res = false;
+        for (String str : carNum)
+            if (str.equals(val)) { res = true; break;}
+        if (res) System.out.print("classic found.");
+        else System.out.print("classic not found.");
+        long classicSearchTime = System.currentTimeMillis() - startTime;
+        System.out.println("\t classicSearchTime (" + classicSearchTime + ");");
+
+        startTime = System.currentTimeMillis();
+        if (carNum.contains(val)) System.out.print("list found.");
+        else System.out.print("listSet not found.");
+        long listSearchTime = System.currentTimeMillis() - startTime;
+        System.out.println("\t listSearchTime (" + listSearchTime + ");");
+
+        startTime = System.currentTimeMillis();
+        int result = Collections.binarySearch(carNum, val);
+        if (result != -1) System.out.print("binary found.");
+        else System.out.print("binary not found.");
+        long binarySearchTime = System.currentTimeMillis() - startTime;
+        System.out.println("\t binarySearchTime (" + binarySearchTime + ");");
+
+        startTime = System.currentTimeMillis();
+        if (carNumHash.contains(val)) System.out.print("hashSet found.");
+        else System.out.print("hashSet not found.");
+        long hashSetSearchTime = System.currentTimeMillis() - startTime;
+        System.out.println("\t hashSetSearchTime (" + hashSetSearchTime + ");");
+
+        startTime = System.currentTimeMillis();
+        if (carNumTree.contains(val)) System.out.print("treeSet found.");
+        else System.out.print("treeSet not found.");
+        long treeSetSearchTime = System.currentTimeMillis() - startTime;
+        System.out.println("\t treeSetSearchTime (" + treeSetSearchTime + ");");
     }
 
 }
