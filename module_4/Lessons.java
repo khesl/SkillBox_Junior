@@ -2,7 +2,11 @@ package module_4;
 
 import Utils.ConsoleColor;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -11,17 +15,17 @@ import java.util.regex.Pattern;
 public class Lessons {
     protected static Scanner scanner;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ParseException {
         scanner = new Scanner(System.in);
 
-        //Lesson_3();
-        //Lesson_4();
-        Lesson_5();
-        //Lesson_7_1();
-        //Lesson_7_2();
-        //Lesson_7_3();
-        //Lesson_7_4();
-        //Lesson_8();
+        //Lesson_3(); // дополнил
+        //Lesson_4(); // дополнил
+        //Lesson_5(); // дополнил
+        //Lesson_7_1(); // не требуется
+        //Lesson_7_2(); // не требуется
+        //Lesson_7_3(); // дополнил
+        //Lesson_7_4(); // не требуется
+        Lesson_8(); // дополнил
     }
 
     /**
@@ -97,7 +101,8 @@ public class Lessons {
      *    3) Все верно. Принято.
      *
      * ---
-     * Не совсем понятно требуется ли от меня что-то? Задача выполнена,
+     * Не совсем понятно требуется ли от меня что-то? Задача выполнена теперь другим способом,
+     * будет работать для любого количества 'Зарплат' тексте
      * */
     private static void Lesson_5(){
         for (int i = 0; i <= 512; i++){
@@ -110,6 +115,8 @@ public class Lessons {
         System.out.println("Коды русских букв в промежутках: " + (int) 'а' + "-" + (int) 'я' + " и "
                                                                + (int) 'А' + "-" + (int) 'Я');
 
+        //- С помощью методов indexOf(), lastIndexOf(), substring() и trim() написать код
+        // в проекте StringExperiments, который считает сумму заработка Васи и Маши.
         String text = "Вася заработал 5000 рублей, Петя - 7563 рубля, а Маша - 30000 рублей";
         System.out.println("\n" + text);
         // 1 way
@@ -122,14 +129,14 @@ public class Lessons {
         System.out.println("Зарплаты: " + firstAmount + ", " + secondAmount + ", "+ thirdAmount);
         System.out.println("Сумма: " + (firstAmount + secondAmount + thirdAmount));*/
         // 2 way
-        // исправить
         List<Double> salarys = new ArrayList<>();
         String temp = text;
         while (temp.contains(" ")){
             String word = temp.substring(0, temp.indexOf(" "));
-            try { salarys.add(Double.valueOf(word)); }
-            catch (Exception e){ continue; }
-            temp = temp.substring(0, temp.indexOf(" ")+1);
+            System.out.print("word: '" + word + "', ");
+            try { salarys.add(Double.valueOf(word)); } catch (Exception e){}
+            temp = temp.substring(temp.indexOf(" ")+1, temp.length());
+            System.out.println("'" + temp + "',");
         }
         System.out.print("Зарплаты: ");
         double summ = 0;
@@ -191,20 +198,41 @@ public class Lessons {
 
     }
 
+    /**3) Есть более эффективное решение. Попробуйте изменить код, используя
+     *
+     * ---
+     * Действительно так эффективнее, в вашем коде нет 2х лишних выделений памяти под объекты,
+     * String[] также легче чем List<>, при этом очень просто проходит проверка на некорректность ввода.
+     */
     private static void Lesson_7_3(){
-        System.out.print("\nВведите ФИО: ");
+        System.out.println(ConsoleColor.setColor("robot# Введите Ф.И.О.", ConsoleColor.Color.ANSI_YELLOW));
+        System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
         String names = scanner.nextLine();
-        String[] fio = names.split(" ");
-        //System.out.print("Фамилия: " + fio[0] + "\nИмя: " + fio[1] + "\nОтчество: " + fio[2]);
 
-        Pattern p = Pattern.compile("([А-Яа-я]?[а-я]*\\s?)");
+        // 1 way
+        /*String[] fio = names.split(" ");
+        System.out.print("Фамилия: " + fio[0] + "\nИмя: " + fio[1] + "\nОтчество: " + fio[2]);*/
+
+        // 2 way
+        /*Pattern p = Pattern.compile("([А-Яа-я]?[а-я]*\\s?)");
         Matcher m = p.matcher(names);
-
         List<String> names_ = new ArrayList<String>();
-        while (m.find()) {
-            names_.add(m.group(0));
+        while (m.find()) names_.add(m.group(0));
+        System.out.println("Фамилия: " + names_.get(0) + "\nИмя: " + names_.get(1) + "\nОтчество: " + names_.get(2));*/
+
+        // 3 way
+        /**
+         *  при вводе сразу проверяем по шаблону, где текст должен состоять из 3х слов, разделённых \\s (' '),
+         *  первая буква которых в верхнем регистре и не содержит 'Ъ, Ь, Ы', остальные буквы слова - кириллица в малом регистре.
+         *  Если ввод соответствует, по парсим текст по символу пробела и определяем Ф.И.О.
+         * */
+        if(!Pattern.compile("[А-ЯЁ&&[^ЪЬЫ]]{1}[а-яё]+\\s[А-ЯЁ&&[^ЪЬЫ]]{1}[а-яё]+\\s" +
+                "[А-ЯЁ&&[^ЪЬЫ]]{1}[а-яё]+$").matcher(names).matches())
+            System.out.println("Неверно введено Ф.И.О.");
+        else {
+            String[] fullNameArray=names.split("\\s");
+        System.out.println("Фамилия: " + fullNameArray[0] + "\nИмя: " + fullNameArray[1] + "\nОтчество: " + fullNameArray[2]);
         }
-        System.out.print("Фамилия: " + names_.get(0) + "\nИмя: " + names_.get(1) + "\nОтчество: " + names_.get(2));
     }
 
     private static void Lesson_7_4(){
@@ -243,9 +271,21 @@ public class Lessons {
         return false;
     }
 
-    private static void Lesson_8() {
+    /**
+     * Вы решили задачу неэффективным способом. Попробуйте использовать следующие инструкции,
+     *
+     * ---
+     * Не сказал бы что это не эффиктивный способ, т.к. в задаче не ставится ввод с консоли, проверка на корректность и пр.
+     * "- Написать программу, которая будет распечатывать Ваш возраст,
+     * соответствующий ему день рождения и день недели. до текущего момента"
+     * Хотя при стоящей задаче ввода, моё решение действительно было бы менее эффективно..
+     *
+     * Интегрировал Ваш способ ввода данных к своей логике задания.
+     *
+     * */
+    private static void Lesson_8() throws IOException, ParseException {
 
-        Calendar cal = Calendar.getInstance();
+        /*Calendar cal = Calendar.getInstance();
         cal.set(1994, Calendar.JULY, 22);
         //cal.add(Calendar.DAY_OF_MONTH, 1);
         Date date = cal.getTime();
@@ -258,5 +298,47 @@ public class Lessons {
 
             cal.add(Calendar.YEAR, 1);
         } while (cal.getTimeInMillis() < Calendar.getInstance().getTimeInMillis());
+        */
+
+        // update
+        /**
+         * Каким способом по вашему мнению эффективнее запрашивать данные?
+         * Во-первых относительно пост/пред условного цикла,
+         * во-вторых со стороны выделения памяти и количества произведённых операций (время выполнения)
+         *      date = scanner.nextLine())
+         *      date = (new BufferedReader(new InputStreamReader(System.in))).readLine();
+         *
+
+         String date = "";
+         while (!(date = scanner.nextLine()).equals("exit")) {
+         }
+
+         или
+
+         do {
+            date = (new BufferedReader(new InputStreamReader(System.in))).readLine();
+         } while (!date.equals("exit"));
+
+         * */
+        String date = "";
+        do {
+            System.out.println(ConsoleColor.setColor("robot# Введите дату. (01.01.1800)", ConsoleColor.Color.ANSI_YELLOW));
+            System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+
+            date = (new BufferedReader(new InputStreamReader(System.in))).readLine();
+
+            if(!Pattern.compile("([0-3][0-9])[/.](0[1-9]|1[0-2])[/.](18|19|20)[0-9]{2}").matcher(date).matches())
+                System.out.println("Неверно введена дата");
+            else {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(new SimpleDateFormat("dd.MM.yyyy").parse(date));
+                int count = 0;
+                do {
+                    System.out.println("Time of life (" + count++ + "):\t"
+                            + new SimpleDateFormat("dd.MM.yyyy - EEEE").format(cal.getTime()));
+                    cal.add(Calendar.YEAR, 1);
+                } while (cal.getTimeInMillis() < Calendar.getInstance().getTimeInMillis());
+            }
+        } while (!date.equals("exit"));
     }
 }
