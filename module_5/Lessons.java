@@ -17,17 +17,17 @@ public class Lessons {
     public static void main(String[] args) throws IOException {
         scanner = new Scanner(System.in);
 
-        //Lesson_1();
-        //Lesson_2_1();
-        //Lesson_2_2();
-        //Lesson2_3();
-        //Lesson_3();
-        //Lesson_4_1();
-        //Lesson_4_2();
-        Lesson_5();
+        //Lesson_2();
+        //Lesson_3_1();
+        //Lesson_3_2();
+        //Lesson_3_3();
+        //Lesson_4();
+        //Lesson_5_1();
+        //Lesson_5_2();
+        Lesson_6();
     }
 
-    private static void Lesson_1(){
+    private static void Lesson_2(){
         System.out.println("\t\t--- First task ---");
         //- Повторить создание массива и заполнение цветами радуги, как показано в видео, а затем написать код, переворачивающий этот массив.
         String[] rainbow = {"Красный", "Оранжевый", "Желтый", "Зеленый", "Голубой", "Синий", "Фиолетовый"};
@@ -86,7 +86,7 @@ public class Lessons {
         }
     }
 
-    private static void Lesson_2_1() throws IOException {
+    private static void Lesson_3_1() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         List<String> visitorNames = new ArrayList<>();
@@ -164,7 +164,7 @@ public class Lessons {
     { return v.compareTo(w) < 0; }
 
     private static List<String> flyStack = new ArrayList<>();
-    private static void Lesson_2_2(){
+    private static void Lesson_3_2(){
         //- Реализовать эмулятор стоянки самолётов-стэк. Размер стоянки ­ 5- мест.
         // Работать должно быть следующим образом: вводим в консоль бортовые номера самолётов,
         // и программа их запоминает (“ставит” их на стоянку). При вводе команды “exitAll”
@@ -218,7 +218,7 @@ public class Lessons {
         System.out.println(ConsoleColor.setColor("supervisor# See you later!", ConsoleColor.ANSI_BLUE));
     }
 
-    private static void Lesson2_3() throws IOException {
+    private static void Lesson_3_3() throws IOException {
         //- По диплому: после авторизации вывести список всех своих контактов с телефонами.
         DiplomaProj proj = new DiplomaProj();
 
@@ -242,7 +242,7 @@ public class Lessons {
                     + contact.getLastName() + " " + contact.getPhone(), ConsoleColor.ANSI_BLUE));
     }
 
-    private static void Lesson_3(){
+    private static void Lesson_4(){
         //- Написать программу, в которую можно добавлять через консоль и хранить перечень лекарств,
         // а также распечатывать весь их список командой LIST.
         String in = "";
@@ -275,7 +275,7 @@ public class Lessons {
     }
 
     private static Map<Integer, String> cars = new TreeMap<>();
-    private static void Lesson_4_1(){
+    private static void Lesson_5_1(){
         //- Написать программу, которая будет выдавать имя владельца автомобиля по его номеру.
         // Программа должна быть умной: если у неё в памяти номера нет, она должна попросить ввести его имя и запомнить.
 
@@ -333,7 +333,7 @@ public class Lessons {
     }
 
     private static Map<String, String> contacts = new TreeMap<>();
-    private static void Lesson_4_2(){
+    private static void Lesson_5_2(){
         //- Написать умный эмулятор телефонной книги. Если в неё ввести новое имя, она должна запросить номер телефона.
         // Если в неё ввести новый номер телефона, должна запросить имя. Если введённое имя или номер телефона найдены,
         // должна вывести дополнительную информацию: номер или имя, соответственно.
@@ -457,7 +457,7 @@ public class Lessons {
     private static List<String> carNum = new ArrayList<>();
     private static Set<String> carNumHash = new HashSet<>();
     private static Set<String> carNumTree = new TreeSet<>();
-    private static void Lesson_5() throws IOException {
+    private static void Lesson_6() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         //- Сделать детектор блатных номеров для ГИБДД (все регионы):
