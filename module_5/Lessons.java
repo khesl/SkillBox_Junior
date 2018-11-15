@@ -18,13 +18,14 @@ public class Lessons {
         scanner = new Scanner(System.in);
 
         //Lesson_2();
+        //Lesson_2_upgrade(); // дополнительное задание
         //Lesson_3_1();
         //Lesson_3_2();
         //Lesson_3_3();
-        //Lesson_4();
+        Lesson_4();
         //Lesson_5_1();
         //Lesson_5_2();
-        Lesson_6();
+        //Lesson_6();
     }
 
     private static void Lesson_2(){
@@ -84,6 +85,140 @@ public class Lessons {
                 System.out.print(str);
             System.out.println();
         }
+    }
+
+    private static void Lesson_2_upgrade(){
+        //- Создать и распечатать массив серий паспортов гражданина РФ.
+        // PS. я не гражданин РФ, поэтому не знаком с пинципами генерации Паспорта, номера брал с первого примера.
+        String[] pasport = new String[10];
+        for (int i = 0; i< pasport.length; i++) {
+            //4507...
+            int issNum = (int)(30 + 20 * Math.random());
+            int issYear = (int)(18 * Math.random());
+            int passNum = (int)(10000 + 970000 * Math.random());
+            pasport[i] = String.valueOf(issNum) + " " + (issYear < 10 ? "0" + String.valueOf(issYear): String.valueOf(issYear)) + " " + String.valueOf(passNum);
+        }
+        for (String str : pasport)
+            System.out.println("Passport num: " + str);
+
+
+        //1) В задании с генерацией паспорта прошу внести изменения. Коллекция паспортов должна содержать серию,
+        // номер и ФИО. Серия может быть введена вручную, а также сгененерирована автоматически - уточнить у
+        // пользователя, который будет наполнять колллекцию паспортов. Добавить возможность по номеру паспорта вывести ФИО
+        String in = "";
+        System.out.println(ConsoleColor.setColor("robot# Hello, what do want? (list, add, search, exit)", ConsoleColor.Color.ANSI_YELLOW));
+        System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+        List<Passport> passports = new ArrayList<>();
+        while (!(in = scanner.nextLine()).toLowerCase().equals("exit")){
+            if (in.toLowerCase().equals("list")){
+                if (passports.size() == 0) {System.out.println(ConsoleColor.setColor("robot# sorry we have no any passport here.", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.println(ConsoleColor.setColor("robot# Try to read new information. (list, add, search, exit)", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                    continue;
+                }
+                System.out.println(ConsoleColor.setColor("robot# Hello, now in storage:", ConsoleColor.Color.ANSI_YELLOW));
+                System.out.println(ConsoleColor.setColor("\tSeria Number | FIO", ConsoleColor.Color.ANSI_GREEN));
+
+                for (Passport str : passports) System.out.println("\t" + ConsoleColor.setColor(str.toString() + " | " + str.getFIO(), ConsoleColor.Color.ANSI_RED));
+                System.out.println(ConsoleColor.setColor("robot# Try to write new command. (list, add, search, exit)", ConsoleColor.Color.ANSI_YELLOW));
+                System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                continue;
+            }
+            /*добавляем паспорт*/
+            else if (in.toLowerCase().equals("add")){
+                System.out.println(ConsoleColor.setColor("robot# Do you want generate new Passport? (y/n).", ConsoleColor.Color.ANSI_YELLOW));
+                System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                int tryCount = 0;
+                while (!(in = scanner.nextLine()).equals("exit") && tryCount < 3) {
+                    if (in.toLowerCase().equals("y") || in.toLowerCase().equals("yes")){
+                        passports.add(Passport.generatePassport());
+                        System.out.println(ConsoleColor.setColor("robot# New Passport (" + passports.get(passports.size()-1) + ") created successful", ConsoleColor.Color.ANSI_YELLOW) +
+                                ConsoleColor.setColor(", new passports count (", ConsoleColor.Color.ANSI_YELLOW) +
+                                ConsoleColor.setColor(String.valueOf(passports.size()), ConsoleColor.Color.ANSI_BLUE) +
+                                ConsoleColor.setColor(");", ConsoleColor.Color.ANSI_YELLOW));
+                        System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                        break;
+                    } else if (in.toLowerCase().equals("n") || in.toLowerCase().equals("no")) {
+                        try {
+                            // ввод серии
+                            System.out.println(ConsoleColor.setColor("robot# write seria value (1234).", ConsoleColor.Color.ANSI_YELLOW));
+                            System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                            while (!Pattern.compile("[0-9]{4}").matcher((in = scanner.nextLine())).matches()){
+                                System.out.println(ConsoleColor.setColor("robot# seria must be a number (1234). Try more.", ConsoleColor.Color.ANSI_YELLOW));
+                                System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                            }
+                            int seria = Integer.valueOf(in);
+
+                            // ввод номера
+                            System.out.println(ConsoleColor.setColor("robot# write number value (123456).", ConsoleColor.Color.ANSI_YELLOW));
+                            System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                            while (!Pattern.compile("[0-9]{6}").matcher((in = scanner.nextLine())).matches()){
+                                System.out.println(ConsoleColor.setColor("robot# number must be a number (123456). Try more.", ConsoleColor.Color.ANSI_YELLOW));
+                                System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                            }
+                            int number = Integer.valueOf(in);
+
+                            // ввод ФИО
+                            System.out.println(ConsoleColor.setColor("robot# write FIO value (Name Surname Patronymic(actual)).", ConsoleColor.Color.ANSI_YELLOW));
+                            System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                            while(!Pattern.compile("[А-ЯЁ&&[^ЪЬЫ]]{1}[а-яё]+\\s[А-ЯЁ&&[^ЪЬЫ]]{1}[а-яё]+\\s" +
+                                    "[А-ЯЁ&&[^ЪЬЫ]]{1}[а-яё]+$").matcher((in = scanner.nextLine())).matches()){
+                                System.out.println(ConsoleColor.setColor("robot# FIO must be a next view: Name Surname Patronymic(actual). Try more.", ConsoleColor.Color.ANSI_YELLOW));
+                                System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                            }
+                            String[] fullNameArray = in.split("\\s");
+                            passports.add(new Passport(seria, number, fullNameArray[0], fullNameArray[1], fullNameArray[2]));
+                        } catch (IllegalArgumentException e){
+                            // при неверном вводе
+                            System.out.println(ConsoleColor.setColor("robot# You write Wrong data, adding passport was canceled.", ConsoleColor.Color.ANSI_YELLOW));
+                            System.out.println(ConsoleColor.setColor("robot# Try to write new command. (list, add, search, exit)", ConsoleColor.Color.ANSI_YELLOW));
+                            System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                            break;
+                        }
+                        System.out.println(ConsoleColor.setColor("robot# New Passport (" + passports.get(passports.size()-1) + ") created successful", ConsoleColor.Color.ANSI_YELLOW) +
+                                ConsoleColor.setColor(", new passports count (", ConsoleColor.Color.ANSI_YELLOW) +
+                                ConsoleColor.setColor(String.valueOf(passports.size()), ConsoleColor.Color.ANSI_BLUE) +
+                                ConsoleColor.setColor(");", ConsoleColor.Color.ANSI_YELLOW));
+                        System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                        break;
+                    } else {
+                        tryCount++;
+                        System.out.println(ConsoleColor.setColor("robot# Do you want generate new Passport? (y/n).", ConsoleColor.Color.ANSI_YELLOW));
+                        System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                    }
+                    System.out.println(ConsoleColor.setColor("robot# Try to write new command. (list, add, search, exit)", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                }
+                continue;
+            }
+            /*Поиск по num - вывод ФИО по введённому номеру паспорта*/
+            else if (in.toLowerCase().equals("search")){
+                System.out.println(ConsoleColor.setColor("robot# Write number of Passport for search. (00 00 000000)", ConsoleColor.Color.ANSI_YELLOW));
+                System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                if(!Pattern.compile("[0-9]{2}+\\s{1}+[0-9]{2}+\\s{1}+[0-9]{6}").matcher((in = scanner.nextLine())).matches())
+                    System.out.println(ConsoleColor.setColor("robot# Wrong Passport num, abort.", ConsoleColor.Color.ANSI_YELLOW));
+                else {
+                    in = in.replaceAll("\\s", "");
+                    passports.contains(Passport.generatePassport());
+                    Passport temp = new Passport(Integer.valueOf(in.substring(0,4)), Integer.valueOf(in.substring(4, in.length())));
+                    int key = Collections.binarySearch(passports, temp);
+                    System.out.println(ConsoleColor.setColor(key > 0 ? "robot# Find Passport (" + temp.toString() + ") for '" + passports.get(key).getFIO() + "'." : "robot# No matches found.", ConsoleColor.Color.ANSI_YELLOW));
+                }
+                System.out.println(ConsoleColor.setColor("robot# Write new command. (list, add, search, exit)", ConsoleColor.Color.ANSI_YELLOW));
+                System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                continue;
+            }
+            /*просто ввод*/
+            else {
+                System.out.println(ConsoleColor.setColor("robot# Try to write new command. (list, add, search, exit)", ConsoleColor.Color.ANSI_YELLOW));
+                System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                continue;
+            }
+
+            //System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+        }
+        System.out.println(ConsoleColor.setColor("robot# See you later!", ConsoleColor.ANSI_BLUE));
+
     }
 
     private static void Lesson_3_1() throws IOException {
