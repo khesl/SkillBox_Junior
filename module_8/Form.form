@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="module_8.Form">
+  <grid id="27dc6" binding="rootPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="1227" height="400"/>
+    </constraints>
+    <properties>
+      <enabled value="true"/>
+      <focusable value="true"/>
+      <maximumSize width="400" height="300"/>
+      <minimumSize width="400" height="300"/>
+      <preferredSize width="400" height="300"/>
+    </properties>
+    <clientProperties>
+      <html.disable class="java.lang.Boolean" value="false"/>
+    </clientProperties>
+    <border type="none"/>
+    <children>
+      <grid id="d62b5" binding="centerPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="Center"/>
+        <properties>
+          <autoscrolls value="true"/>
+          <inheritsPopupMenu value="false"/>
+          <maximumSize width="200" height="50"/>
+          <minimumSize width="200" height="50"/>
+          <preferredSize width="200" height="50"/>
+          <visible value="true"/>
+        </properties>
+        <border type="etched">
+          <title-color color="-4473925"/>
+        </border>
+        <children>
+          <grid id="80cc2" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints/>
+            <properties>
+              <autoscrolls value="false"/>
+              <maximumSize width="215" height="34"/>
+            </properties>
+            <clientProperties>
+              <html.disable class="java.lang.Boolean" value="false"/>
+            </clientProperties>
+            <border type="none"/>
+            <children>
+              <component id="c730" class="javax.swing.JLabel">
+                <constraints/>
+                <properties>
+                  <horizontalAlignment value="4"/>
+                  <maximumSize width="100" height="24"/>
+                  <minimumSize width="100" height="24"/>
+                  <preferredSize width="100" height="24"/>
+                  <text value="Name"/>
+                </properties>
+              </component>
+              <component id="2b90b" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                <constraints/>
+                <properties>
+                  <horizontalAlignment value="2"/>
+                  <maximumSize width="100" height="24"/>
+                  <minimumSize width="100" height="24"/>
+                  <preferredSize width="100" height="24"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <component id="e83de" class="javax.swing.JSeparator">
+            <constraints/>
+            <properties/>
+          </component>
+          <grid id="87b47" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints/>
+            <properties>
+              <maximumSize width="215" height="34"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="c25cb" class="javax.swing.JLabel">
+                <constraints/>
+                <properties>
+                  <horizontalAlignment value="4"/>
+                  <maximumSize width="100" height="24"/>
+                  <minimumSize width="100" height="24"/>
+                  <preferredSize width="100" height="24"/>
+                  <text value="Surname"/>
+                </properties>
+              </component>
+              <component id="1f726" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+                <constraints/>
+                <properties>
+                  <horizontalAlignment value="2"/>
+                  <maximumSize width="100" height="24"/>
+                  <minimumSize width="100" height="24"/>
+                  <preferredSize width="100" height="24"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <component id="e5310" class="javax.swing.JSeparator">
+            <constraints/>
+            <properties/>
+          </component>
+          <grid id="2bb35" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints/>
+            <properties>
+              <maximumSize width="215" height="34"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="92c08" class="javax.swing.JLabel">
+                <constraints/>
+                <properties>
+                  <horizontalAlignment value="4"/>
+                  <maximumSize width="100" height="24"/>
+                  <minimumSize width="100" height="24"/>
+                  <preferredSize width="100" height="24"/>
+                  <text value="Patronymic"/>
+                </properties>
+              </component>
+              <component id="f75da" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+                <constraints/>
+                <properties>
+                  <horizontalAlignment value="2"/>
+                  <maximumSize width="100" height="24"/>
+                  <minimumSize width="100" height="24"/>
+                  <preferredSize width="100" height="24"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <component id="c647e" class="javax.swing.JSeparator">
+            <constraints/>
+            <properties/>
+          </component>
+          <grid id="b92c3" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints/>
+            <properties>
+              <maximumSize width="215" height="34"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="3b101" class="javax.swing.JLabel">
+                <constraints/>
+                <properties>
+                  <horizontalAlignment value="4"/>
+                  <maximumSize width="100" height="24"/>
+                  <minimumSize width="100" height="24"/>
+                  <preferredSize width="100" height="24"/>
+                  <text value="DateBirth"/>
+                </properties>
+              </component>
+              <component id="1c52d" class="javax.swing.JTextField" binding="textField4" default-binding="true">
+                <constraints/>
+                <properties>
+                  <horizontalAlignment value="2"/>
+                  <maximumSize width="100" height="24"/>
+                  <minimumSize width="100" height="24"/>
+                  <preferredSize width="100" height="24"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <component id="24493" class="javax.swing.JSeparator">
+            <constraints/>
+            <properties/>
+          </component>
+          <grid id="d99e2" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints/>
+            <properties>
+              <maximumSize width="215" height="34"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="4587f" class="javax.swing.JLabel">
+                <constraints/>
+                <properties>
+                  <horizontalAlignment value="4"/>
+                  <maximumSize width="100" height="24"/>
+                  <minimumSize width="100" height="24"/>
+                  <preferredSize width="100" height="24"/>
+                  <text value="City"/>
+                </properties>
+              </component>
+              <component id="80738" class="javax.swing.JTextField" binding="textField5" default-binding="true">
+                <constraints/>
+                <properties>
+                  <horizontalAlignment value="2"/>
+                  <maximumSize width="100" height="24"/>
+                  <minimumSize width="100" height="24"/>
+                  <preferredSize width="100" height="24"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="816ef" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="39bd2" class="javax.swing.JButton" binding="кнопка_2Button" default-binding="true">
+                <constraints/>
+                <properties>
+                  <text value="Кнопка_2"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <vspacer id="18bf0">
+            <constraints/>
+          </vspacer>
+        </children>
+      </grid>
+      <grid id="76f7" binding="topPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="3">
+        <constraints border-constraint="North"/>
+        <properties>
+          <maximumSize width="-1" height="500"/>
+          <minimumSize width="-1" height="10"/>
+          <preferredSize width="-1" height="10"/>
+        </properties>
+        <border type="none"/>
+        <children/>
+      </grid>
+      <grid id="64a8c" binding="leftPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
+        <constraints border-constraint="West"/>
+        <properties>
+          <maximumSize width="-1" height="-1"/>
+          <minimumSize width="10" height="-1"/>
+          <preferredSize width="10" height="-1"/>
+        </properties>
+        <border type="none"/>
+        <children/>
+      </grid>
+      <grid id="1afe" binding="downPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="4">
+        <constraints border-constraint="South"/>
+        <properties>
+          <maximumSize width="-1" height="500"/>
+          <minimumSize width="-1" height="10"/>
+          <preferredSize width="-1" height="10"/>
+        </properties>
+        <border type="none"/>
+        <children/>
+      </grid>
+      <grid id="cba8d" binding="rightPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="2">
+        <constraints border-constraint="East"/>
+        <properties>
+          <maximumSize width="-1" height="-1"/>
+          <minimumSize width="10" height="-1"/>
+          <preferredSize width="10" height="-1"/>
+        </properties>
+        <border type="none"/>
+        <children/>
+      </grid>
+    </children>
+  </grid>
+</form>

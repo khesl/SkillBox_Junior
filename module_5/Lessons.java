@@ -90,7 +90,8 @@ public class Lessons {
     private static void Lesson_2_upgrade(){
         //- Создать и распечатать массив серий паспортов гражданина РФ.
         // PS. я не гражданин РФ, поэтому не знаком с пинципами генерации Паспорта, номера брал с первого примера.
-        String[] pasport = new String[10];
+
+        /*String[] pasport = new String[10];
         for (int i = 0; i< pasport.length; i++) {
             //4507...
             int issNum = (int)(30 + 20 * Math.random());
@@ -99,7 +100,7 @@ public class Lessons {
             pasport[i] = String.valueOf(issNum) + " " + (issYear < 10 ? "0" + String.valueOf(issYear): String.valueOf(issYear)) + " " + String.valueOf(passNum);
         }
         for (String str : pasport)
-            System.out.println("Passport num: " + str);
+            System.out.println("Passport num: " + str);*/
 
 
         //1) В задании с генерацией паспорта прошу внести изменения. Коллекция паспортов должна содержать серию,
