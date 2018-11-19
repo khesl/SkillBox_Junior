@@ -1,5 +1,8 @@
 package Utils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MyUtils {
 
     private static int[] vowels = {1072,1077,1080,1086,1091,1099,1101,1102,1103};
@@ -38,5 +41,29 @@ public class MyUtils {
             if (i == 0) name = name.toUpperCase();
         }
         return name;
+    }
+
+    // подбор шаблона телефона
+    public static String getPhoneNumber(String telNum){
+        if (checkPhoneNumber(telNum))
+            return telNum.replaceAll("[\\s()-]", "");
+        throw new IllegalArgumentException("Please write correct number.");
+    }
+    public static boolean checkPhoneNumber(String telNum){
+        // https://www.freeformatter.com/java-regex-tester.html#ad-output
+
+        // проверяем верно ли количество цифр ********** x10
+        if (!Pattern.compile("^(\\+7|8)[0-9]{10}").matcher(telNum.replaceAll("[\\s()-]", "")).matches())
+            return false;
+
+        // p = Pattern.compile("^[(][0-9]{3}[)][0-9]{7}$");  // (***)*******
+        // p = Pattern.compile("^.[0-9]{3}.[0-9]{7}$");  // (***)*******
+        //  +*(***)*******|*(***)*******|+*(***)*** ** **|* *** *** ** **|+*-***-***-**-** и другие... да, я писал это сам
+        if (!Pattern.compile("\\+?[7,8]{1}[\\s]*[(\\s-]?[0-9]{3}[\\s]*[)\\s-]?[\\s]*[0-9]{2,3}[\\s-]?[0-9]{2,3}[\\s-]?[0-9]{2,3}")
+                .matcher(telNum).matches())
+            return false;
+
+        //System.out.println("telephone format undetected here, please try another format!");
+        return true;
     }
 }

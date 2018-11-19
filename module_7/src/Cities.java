@@ -4,8 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Cities
-{
+public class Cities {
+
+    private static int playerPoint = 0;
     public static String cities[] = {
             "Abakan", "Belgorod", "Chelyabinsk", "Dzerzhinsk", "Ekaterinburg",
             "Gelendzhik", "Irkutsk", "Krasnoyarsk", "Lipetsk", "Moscow",
@@ -13,11 +14,9 @@ public class Cities
             "Ufa", "Volgograd", "Yakutsk", "Zvenigorod"
     };
 
-    public static void main(String[] args) throws IOException
-    {
+    public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String previousCity = "";
-        System.out.println("K".toLowerCase().charAt(0) == 'k');
         for(;;)
         {
             try {
@@ -29,13 +28,15 @@ public class Cities
                     System.out.println("This city is wrong! Try again!");
                     continue;
                 }
+                playerPoint++;
                 String nextCity = searchNextCity(city);
                 System.out.println("My city is: " + nextCity);
                 previousCity = nextCity;
-            }
-            catch (Exception e){
+            } catch (Exception e){
                 // была ошибка при нулевом вводе, когда city.length() == 0
                 continue;
+            } finally {
+                System.out.println("\tИгрок заработал уже (" + playerPoint + ") очка(ов)!");
             }
         }
     }

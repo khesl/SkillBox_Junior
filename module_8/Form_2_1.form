@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="module_8.Form_2_1">
-  <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="6" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="7" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="510" height="400"/>
@@ -120,7 +120,7 @@
       </grid>
       <vspacer id="bcef8">
         <constraints>
-          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <grid id="2038c" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
@@ -136,6 +136,29 @@
               <foreground color="-16331776"/>
               <maximum value="3"/>
               <value value="0"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="90129" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="f567e" class="javax.swing.JLabel" binding="robasticLabel">
+            <constraints/>
+            <properties>
+              <text value="Проверь сложность текста:"/>
+            </properties>
+          </component>
+          <component id="90f59" class="javax.swing.JTextField" binding="robasticField">
+            <constraints/>
+            <properties>
+              <maximumSize width="100" height="24"/>
+              <minimumSize width="100" height="24"/>
+              <preferredSize width="100" height="24"/>
             </properties>
           </component>
         </children>

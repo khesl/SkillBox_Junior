@@ -19,9 +19,10 @@ public class DiplomaProj {
 
     private static AuthAuthorization authAuthorization;
     private static TelegramApiBridge telegramApiBridge;
+    private static AuthCheckedPhone authCheckedPhone;
     private String phone;
-    private static boolean setPhone = false;
-    private static boolean authorized = false;
+    private boolean setPhone = false;
+    private boolean authorized = false;
 
     public DiplomaProj(){}
 
@@ -56,9 +57,9 @@ public class DiplomaProj {
             System.out.print(ConsoleColor.setColor("Write your phone number: ", ConsoleColor.ANSI_YELLOW));
             phone = String.valueOf(in.nextLine()).trim();
         }*/
-        AuthCheckedPhone acp = telegramApiBridge.authCheckPhone(phone);
-        System.out.println(ConsoleColor.setColor("isInvited(" + acp.isInvited() + "); isRegistered("
-                + acp.isRegistered() + ")", ConsoleColor.ANSI_RED));
+        authCheckedPhone = telegramApiBridge.authCheckPhone(phone);
+        System.out.println(ConsoleColor.setColor("isInvited(" + authCheckedPhone.isInvited() + "); isRegistered("
+                + authCheckedPhone.isRegistered() + ")", ConsoleColor.ANSI_RED));
         AuthSentCode asc = telegramApiBridge.authSendCode(phone);
         String hash = asc.getPhoneCodeHash();
         return true;
@@ -72,23 +73,29 @@ public class DiplomaProj {
     /**
      * вывод списка контактов
      * */
-    public static void getContacts() throws IOException {
+    List<UserContact> contacts = null;
+    public List<UserContact> getContacts() throws IOException {
+        if (contacts != null) return contacts;
         if (!isAuthorized()) throw new NullPointerException("Need Authorized first.");
-            List<UserContact> contacts = telegramApiBridge.contactsGetContacts();
-            for (UserContact contact : contacts)
-                System.out.println(ConsoleColor.setColor(contact.getFirstName() + " "
-                        + contact.getLastName() + " " + contact.getPhone(), ConsoleColor.ANSI_BLUE));
-
+        contacts = telegramApiBridge.contactsGetContacts();
+        return contacts;
     }
+    public List<UserContact> updateContacts() throws IOException {
+        if (!isAuthorized()) throw new NullPointerException("Need Authorized first.");
+        contacts = telegramApiBridge.contactsGetContacts();
+        return contacts;
+    }
+
 
 
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; setPhone = true;}
 
-    public static boolean isSetPhone() { return setPhone; }
-    public static boolean isAuthorized() { return authorized; }
+    public boolean isSetPhone() { return setPhone; }
+    public boolean isAuthorized() { return authorized; }
 
-    public static AuthAuthorization getAuthAuthorization() { return authAuthorization; }
-    public static TelegramApiBridge getTelegramApiBridge() { return telegramApiBridge; }
+    public AuthAuthorization getAuthAuthorization() { return authAuthorization; }
+    public TelegramApiBridge getTelegramApiBridge() { return telegramApiBridge; }
+    public AuthCheckedPhone getAuthCheckedPhone() { return authCheckedPhone; }
 
 }

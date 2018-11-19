@@ -36,9 +36,10 @@ public class TextAnalizerTester {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            Assert.assertNotNull(text);
         }
 
-        Assert.assertNotNull(text);
     }
     @Test
     public void getFile_2(){

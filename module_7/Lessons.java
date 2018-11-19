@@ -16,7 +16,7 @@ public class Lessons {
     }
 
     @Test
-    public void getCircleSquareTest(){
+    public final void getCircleSquareTest(){
         Calculator calc = new Calculator();
         int actualSqueare = (int) calc.getCircleSquare(17.5d);
         int expectedSquare = 962;
@@ -24,7 +24,7 @@ public class Lessons {
     }
 
     @Test
-    public void getRectangleSquareTest(){
+    public final void getRectangleSquareTest(){
         Calculator calc = new Calculator();
         int actualSqueare = calc.getRectangleSquare(6, 5);
         int expectedSquare = 30;
