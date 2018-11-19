@@ -4,14 +4,22 @@ import Diploma.src.Main;
 import Utils.MyUtils;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 public class StartSignInForm {
     private static Main main = null;
 
-    private JPanel rootPanel;
+
+    private JPanel rootPanel = new JPanel(){
+        @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(main.backgroundImage, 0, 0, null);
+    }};
     private JPanel topPanel;
     private JPanel centerPanel;
     private JTextField numField;
@@ -20,6 +28,7 @@ public class StartSignInForm {
 
     public StartSignInForm(Main main) {
         this.main = main;
+
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -32,7 +41,7 @@ public class StartSignInForm {
                         main.getDiplomApp().getSmsAuthorisation();
                         main.getFrame_1().setVisible(false);
                         main.getFrame_2().setVisible(true);
-                        main.getForm_7_2_2().startTimer(30);
+                        main.getCodeSignForm().startTimer(30);
                     }
                 } catch (IOException e1) {
                     //e1.printStackTrace();
