@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Diploma.src.Forms.StartSignInForm">
-  <grid id="27dc6" binding="rootPanel" layout-manager="BorderLayout" hgap="0" vgap="5">
+  <grid id="27dc6" binding="rootPanel" custom-create="true" layout-manager="BorderLayout" hgap="0" vgap="5">
     <constraints>
       <xy x="20" y="20" width="640" height="480"/>
     </constraints>
@@ -14,64 +14,149 @@
     <children>
       <grid id="d72d8" binding="topPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints border-constraint="North"/>
-        <properties/>
+        <properties>
+          <opaque value="false"/>
+        </properties>
         <border type="none"/>
         <children/>
       </grid>
-      <grid id="c2504" binding="centerPanel" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="1ba62" binding="centerPanel" layout-manager="GridLayoutManager" row-count="6" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints border-constraint="Center"/>
         <properties>
-          <opaque value="true"/>
+          <background color="-8814974"/>
+          <opaque value="false"/>
         </properties>
         <border type="none"/>
         <children>
-          <component id="2324a" class="javax.swing.JTextField" binding="numField">
+          <component id="308cc" class="javax.swing.JLabel" binding="numInfoLabel">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="2" hsize-policy="2" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <focusable value="true"/>
-              <font size="14" style="2"/>
-              <text value="+7 ___ _______"/>
+              <autoscrolls value="false"/>
+              <background color="-263173"/>
+              <font size="14"/>
+              <foreground color="-14202256"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <labelFor value="2324a"/>
+              <opaque value="false"/>
+              <text value="Введите код страны и номер"/>
+              <verticalAlignment value="3"/>
+              <verticalTextPosition value="3"/>
             </properties>
           </component>
+          <component id="9e213" class="javax.swing.JLabel" binding="numInfoLabel2">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="2" hsize-policy="2" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-1"/>
+              <font size="14"/>
+              <foreground color="-14202256"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <labelFor value="2324a"/>
+              <text value="вашего мобильного телефона"/>
+              <verticalAlignment value="1"/>
+              <verticalTextPosition value="1"/>
+            </properties>
+          </component>
+          <grid id="1accc" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="1">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <opaque value="false"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="f7906" class="javax.swing.JLabel" binding="labelNumber">
+                <constraints/>
+                <properties>
+                  <icon value="Diploma/src/Image/mobile_icon_small.png"/>
+                  <labelFor value="2324a"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="66373" class="javax.swing.JTextField" binding="codeNumField">
+                <constraints/>
+                <properties>
+                  <background color="-263173"/>
+                  <font size="14" style="2"/>
+                  <foreground color="-14202256"/>
+                  <horizontalAlignment value="2"/>
+                  <maximumSize width="60" height="30"/>
+                  <minimumSize width="60" height="30"/>
+                  <opaque value="false"/>
+                  <preferredSize width="60" height="30"/>
+                  <text value="+7(___)"/>
+                </properties>
+              </component>
+              <component id="2324a" class="javax.swing.JTextField" binding="numField">
+                <constraints/>
+                <properties>
+                  <alignmentX value="0.5"/>
+                  <background color="-263173"/>
+                  <focusable value="true"/>
+                  <font size="14" style="2"/>
+                  <foreground color="-14202256"/>
+                  <horizontalAlignment value="2"/>
+                  <maximumSize width="70" height="30"/>
+                  <minimumSize width="70" height="30"/>
+                  <opaque value="false"/>
+                  <preferredSize width="70" height="30"/>
+                  <text value="___-__-__"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
           <component id="16888" class="javax.swing.JButton" binding="okButton">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                <minimum-size width="150" height="24"/>
-                <preferred-size width="150" height="24"/>
-                <maximum-size width="150" height="24"/>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <minimum-size width="175" height="24"/>
+                <preferred-size width="175" height="24"/>
+                <maximum-size width="175" height="24"/>
               </grid>
             </constraints>
             <properties>
+              <background color="-15036727"/>
+              <contentAreaFilled value="true"/>
+              <foreground color="-263173"/>
+              <hideActionText value="false"/>
+              <opaque value="true"/>
               <text value="Продолжить"/>
             </properties>
           </component>
           <vspacer id="264b6">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </vspacer>
-          <vspacer id="8b729">
-            <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                <minimum-size width="-1" height="50"/>
-                <preferred-size width="-1" height="50"/>
-                <maximum-size width="-1" height="50"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                <minimum-size width="-1" height="225"/>
+                <preferred-size width="-1" height="225"/>
+                <maximum-size width="-1" height="225"/>
               </grid>
             </constraints>
           </vspacer>
-          <component id="308cc" class="javax.swing.JLabel" binding="numInfoLabel">
+          <hspacer id="892c2">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="300" height="-1"/>
+                <preferred-size width="300" height="-1"/>
+                <maximum-size width="300" height="-1"/>
+              </grid>
             </constraints>
-            <properties>
-              <text value="Введите код страны и номер вашего мобильного телефона"/>
-            </properties>
-          </component>
+          </hspacer>
+          <vspacer id="8b729">
+            <constraints>
+              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <hspacer id="95e48">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
         </children>
       </grid>
     </children>

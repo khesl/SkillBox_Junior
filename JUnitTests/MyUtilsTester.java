@@ -33,4 +33,14 @@ public class MyUtilsTester {
         Assert.assertTrue(MyUtils.checkPhoneNumber("+7(777)1234567"));
         Assert.assertTrue(MyUtils.checkPhoneNumber("+7-777-123-45-67"));
     }
+
+    @Test
+    public void getPatternUpdateTest(){
+            // +7(5__)  || +7(___)
+            String actualValue = MyUtils.getPatternUpdate("+7(5__)", '6', "+7(___)");
+            String expectedValue = "+7(56_)";
+
+            Assert.assertEquals(actualValue,expectedValue);
+
+    }
 }

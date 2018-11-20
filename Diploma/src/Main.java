@@ -1,9 +1,7 @@
 package Diploma.src;
 
 import Diploma.DiplomaProj;
-import Diploma.src.Forms.CodeSignForm;
-import Diploma.src.Forms.MainForm;
-import Diploma.src.Forms.StartSignInForm;
+import Diploma.src.Forms.*;
 import module_8.*;
 
 import javax.swing.*;
@@ -16,9 +14,13 @@ public class Main {
     private JFrame frame_1;
     private JFrame frame_2;
     private JFrame frame_3;
+    private JFrame frame_4;
+    private JFrame frame_5;
     private StartSignInForm startSignInForm;
     private CodeSignForm codeSignForm;
     private MainForm mainForm;
+    private StartSignUpForm startSignUpForm;
+    private EditProfileForm editProfileForm;
     private DiplomaProj diplomApp = new DiplomaProj();
 
     public static void main(String[] args) throws Exception {
@@ -30,7 +32,7 @@ public class Main {
     public static Image backgroundImage;
     private void StartForm(){
         try {
-            backgroundImage = javax.imageio.ImageIO.read(new File("F:/files/java/JavaExperiments/SkillBox_Junior/Diploma/src/Image/DSC_0351_722x480.jpg"));
+            backgroundImage = javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\SkillBox_Junior\\Diploma\\src\\Image\\DSC_0351_722x480.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -38,9 +40,13 @@ public class Main {
         startSignInForm = new StartSignInForm(this);
         codeSignForm = new CodeSignForm(this);
         mainForm = new MainForm(this);
-        frame_1 = createMainFrame(startSignInForm.getRootPanel(), "Lesson_7 Окно 1, Ввод телефона", new Dimension(640,480));
-        frame_2 = createMainFrame(codeSignForm.getRootPanel(), "Lesson_7 Окно 2, Ввод кода", new Dimension(640,480));
-        frame_3 = createMainFrame(mainForm.getRootPanel(), "Lesson_7 Окно 3, Список контактов", new Dimension(640,480));
+        startSignUpForm = new StartSignUpForm(this);
+        editProfileForm = new EditProfileForm(this);
+        frame_1 = createMainFrame(startSignInForm.getRootPanel(), "Окно 1, Ввод телефона", new Dimension(640,480));
+        frame_2 = createMainFrame(codeSignForm.getRootPanel(), "Окно 2, Ввод кода", new Dimension(640,480));
+        frame_3 = createMainFrame(mainForm.getRootPanel(), "Окно 3, Список контактов", new Dimension(640,480));
+        frame_4 = createMainFrame(startSignUpForm.getRootPanel(), "Окно 4, Окно регистрации", new Dimension(640,480));
+        frame_5 = createMainFrame(editProfileForm.getRootPanel(), "Окно 5, Настройки профиля", new Dimension(320,240));
 
         /*try {
             final Image backgroundImage = javax.imageio.ImageIO.read(new File("F:/files/java/JavaExperiments/SkillBox_Junior/Diploma/src/Image/DSC_0351_722x480.jpg"));
@@ -56,6 +62,10 @@ public class Main {
         //frame_1.setUndecorated(true); // убрать системные бордеры у окна!
         frame_1.setResizable(false); // запретить изменение размеров окна (это знал, но всё равно полезно)
         frame_1.setVisible(true);
+        frame_2.setVisible(true);
+        frame_3.setVisible(true);
+        frame_4.setVisible(true);
+        frame_5.setVisible(true);
     }
 
 
@@ -83,8 +93,11 @@ public class Main {
     public JFrame getFrame_1() { return frame_1; }
     public JFrame getFrame_2() { return frame_2; }
     public JFrame getFrame_3() { return frame_3; }
+    public JFrame getFrame_4() { return frame_4; }
+    public JFrame getFrame_5() { return frame_5; }
     public DiplomaProj getDiplomApp() { return diplomApp; }
     public StartSignInForm startSignInForm() { return startSignInForm; }
+    public StartSignUpForm startSignUpForm() { return startSignUpForm; }
     public CodeSignForm getCodeSignForm() { return codeSignForm; }
     public MainForm getMainForm() { return mainForm; }
 

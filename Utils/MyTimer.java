@@ -1,7 +1,5 @@
 package Utils;
 
-import module_8.MyTimerInterface;
-
 /**
  * Класс чтобы выполнять вызов функции timerInit() в переданном классе.
  * */

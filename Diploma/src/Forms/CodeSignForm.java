@@ -17,24 +17,29 @@ public class CodeSignForm implements MyTimerInterface {
     private static Main main = null;
     private JPanel rootPanel;
     private JPanel topPanel;
-    private JPanel centerPanel;
     private JPasswordField codeField;
     private JButton okButton;
     private JLabel telNumLabel;
-    private JTextPane codeInfoTextPane;
     private JProgressBar timerBar;
     private JLabel timerLabel;
     private JLabel timerCountLabel;
     private JButton failTimerButton;
+    private JLabel codeInfoLabel1;
+    private JLabel codeInfoLabel2;
+    private JLabel codeInfoLabel3;
+    private JPanel centerPanel;
 
     public CodeSignForm(Main main) {
         this.main = main;
+        //codeField.setBackground(new Color(251,251,251,50));
+
+
         failTimerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     main.getDiplomApp().getSmsAuthorisation();
-                } catch (IOException e1) {
+                } catch (Exception e1) {
                     JOptionPane.showMessageDialog(getRootPanel(), "Ошибка соединения с Telegram", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     //e1.printStackTrace();
                 }
@@ -47,7 +52,13 @@ public class CodeSignForm implements MyTimerInterface {
                     JOptionPane.showMessageDialog(getRootPanel(), "Неверный формат кода.", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 else {
                     try {
-                        main.getDiplomApp().authorized(String.valueOf(codeField.getPassword()));
+                        if (!main.getDiplomApp().authorized(String.valueOf(codeField.getPassword()))) {
+                            JOptionPane.showMessageDialog(getRootPanel(), "Ошибка авторизации, попробуйте позднее.", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                            //main.getFrame_2().setVisible(false);
+                            //main.getFrame_1().setVisible(true);
+                            startTimer(10); // для теста
+                            return;
+                        }
                         main.getFrame_2().setVisible(false);
                         main.getFrame_3().setVisible(true);
                         if (main.getDiplomApp().isAuthorized()) main.getMainForm().updateContacts();
@@ -103,12 +114,24 @@ public class CodeSignForm implements MyTimerInterface {
             updateProgressBar(currentTimer, 0, maxTimer);
             timerCountLabel.setText(currentTimer + "s");
             timerBar.setVisible(true);
+            timerCountLabel.setVisible(true);
             failTimerButton.setVisible(false);
             timerLabel.setText("У вас осталось для ввода кода:");
         } else {
             timerBar.setVisible(false);
+            timerCountLabel.setVisible(false);
             failTimerButton.setVisible(true);
             timerLabel.setText("Время действия кода вышло."); //У вас осталось для ввода кода:
         }
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        rootPanel = new JPanel(){
+            @Override
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(main.backgroundImage, 0, 0, null);
+            }};
     }
 }

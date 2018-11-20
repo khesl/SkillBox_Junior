@@ -65,6 +65,7 @@ public class DiplomaProj {
         return true;
     }
     public boolean authorized(String code) throws IOException {
+        if (telegramApiBridge == null) return false;
         authAuthorization = telegramApiBridge.authSignIn(code);
         authorized = true;
         return true;

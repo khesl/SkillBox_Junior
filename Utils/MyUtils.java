@@ -66,4 +66,11 @@ public class MyUtils {
         //System.out.println("telephone format undetected here, please try another format!");
         return true;
     }
+
+    public static String getPatternUpdate(String source, char input, String pattern){
+        // +7(5__)  || +7(___)
+        if (source.contains("_"))
+            source = source.replaceFirst("_", String.valueOf(input));
+        return source;
+    }
 }
