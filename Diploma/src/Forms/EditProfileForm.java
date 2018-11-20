@@ -21,9 +21,20 @@ public class EditProfileForm {
 
     public EditProfileForm(Main main) {
         this.main = main;
-        rootPanel.setBackground(new Color(0,0,0,150));
+        //rootPanel.setBackground(new Color(0,0,0,150));
+
 
     }
 
     public JPanel getRootPanel(){ return rootPanel; }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        rootPanel = new JPanel(){
+            @Override
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(main.background_320x240_85_opacity_Image, 0, 0, null);
+            }};
+    }
 }
