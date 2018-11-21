@@ -1,6 +1,9 @@
+package module_8.src.Example.SimpleGUI_2.src;
+
+import module_8.src.Example.SimpleGUI_2.src.Form;
+
 import javax.swing.*;
 import java.awt.*;
-
 
 public class Loader
 {

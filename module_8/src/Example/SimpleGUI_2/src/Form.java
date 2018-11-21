@@ -1,3 +1,5 @@
+package module_8.src.Example.SimpleGUI_2.src;
+
 import javax.swing.*;
 
 public class Form {
