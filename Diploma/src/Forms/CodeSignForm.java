@@ -54,9 +54,9 @@ public class CodeSignForm implements MyTimerInterface {
                     try {
                         if (!main.getDiplomApp().authorized(String.valueOf(codeField.getPassword()))) {
                             JOptionPane.showMessageDialog(getRootPanel(), "Ошибка авторизации, попробуйте позднее.", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                            //main.getFrame_2().setVisible(false);
-                            //main.getFrame_1().setVisible(true);
-                            startTimer(10); // для теста
+                            main.getFrame_2().setVisible(false);
+                            main.getFrame_1().setVisible(true);
+                            //startTimer(10); // для теста
                             return;
                         }
                         main.getFrame_2().setVisible(false);

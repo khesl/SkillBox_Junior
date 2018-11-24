@@ -31,11 +31,12 @@ public class StartSignInForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    System.out.println(numField.getText());
-                    if (!MyUtils.checkPhoneNumber(numField.getText()))
+                    String number = codeNumField.getText() + numField.getText();
+                    System.out.println(number);
+                    if (!MyUtils.checkPhoneNumber(number))
                         JOptionPane.showMessageDialog(getRootPanel(), "Неверно введён номер", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     else {
-                        main.getDiplomApp().setPhone(MyUtils.getPhoneNumber(numField.getText()));
+                        main.getDiplomApp().setPhone(MyUtils.getPhoneNumber(number));
                         main.getDiplomApp().getSmsAuthorisation();
                         main.getFrame_1().setVisible(false);
                         main.getFrame_2().setVisible(true);

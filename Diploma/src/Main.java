@@ -71,13 +71,13 @@ public class Main {
 
         //frame_1.setUndecorated(true); // убрать системные бордеры у окна!
         frame_1.setResizable(false); // запретить изменение размеров окна (это знал, но всё равно полезно)
-        //frame_1.setVisible(true);
+        frame_1.setVisible(true);
         //frame_2.setVisible(true);
         //frame_3.setVisible(true);
         //frame_4.setVisible(true);
         //frame_5.setVisible(true);
-        frame_6.setVisible(true);
-        frame_7.setVisible(true);
+        //frame_6.setVisible(true);
+        //frame_7.setVisible(true);
     }
 
 
