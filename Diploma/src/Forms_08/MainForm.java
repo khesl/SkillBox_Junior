@@ -1,4 +1,4 @@
-package Diploma.src.Forms;
+package Diploma.src.Forms_08;
 
 import Diploma.src.Main;
 import org.javagram.response.object.UserContact;
@@ -19,14 +19,14 @@ public class MainForm {
     private JList contactsList;
     private JLabel labelChooseContactLabel;
     private JTextField chooseTextField;
-    private JButton обновитьКонтактыButton;
+    private JButton updateContactButton;
     private JTextField chooseNumberField;
 
     public MainForm(Main main) {
         this.main = main;
         contactsList.setModel(model);
 
-        обновитьКонтактыButton.addActionListener(new ActionListener() {
+        updateContactButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateContacts();

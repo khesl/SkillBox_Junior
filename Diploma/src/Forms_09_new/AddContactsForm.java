@@ -1,18 +1,21 @@
-package Diploma.src.Forms;
+package Diploma.src.Forms_09_new;
 
 import Diploma.src.Main;
+import Diploma.src.Main_09_New;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * 6я форма
+ * */
 public class AddContactsForm {
-    private static Main main = null;
     private final String CODE_NUM_PATTERN = "+7(___)";
     private final String BODY_NUM_PATTERN = "___-__-__";
 
-
+    private static Main_09_New main = null;
     private JPanel rootPanel;
     private JPanel bottomPanel;
     private JPanel centerPanel;
@@ -25,9 +28,8 @@ public class AddContactsForm {
     private JButton addContactButton;
     private JLabel backButton;
 
-    public AddContactsForm(Main main) {
+    public AddContactsForm(Main_09_New main) {
         this.main = main;
-
 
         codeNumField.addKeyListener(new KeyAdapter() {
             @Override
@@ -83,7 +85,7 @@ public class AddContactsForm {
             @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(main.background_320x240_85_opacity_Image, 0, 0, null);
+                g.drawImage(main.backgroundImage, 0, 0, null);
             }};
     }
 }

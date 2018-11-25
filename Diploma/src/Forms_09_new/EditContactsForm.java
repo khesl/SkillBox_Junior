@@ -1,11 +1,11 @@
-package Diploma.src.Forms;
+package Diploma.src.Forms_09_new;
 
-import Diploma.src.Main;
+import Diploma.src.Main_09_New;
 
 import javax.swing.*;
 
 public class EditContactsForm {
-    private static Main main = null;
+    private static Main_09_New main = null;
 
     private JPanel rootPanel;
     private JPanel bottomPanel;
@@ -15,7 +15,7 @@ public class EditContactsForm {
     private JTextField contactNum;
     private JPanel contactIcon;
 
-    public EditContactsForm(Main main) {
+    public EditContactsForm(Main_09_New main) {
         this.main = main;
     }
 

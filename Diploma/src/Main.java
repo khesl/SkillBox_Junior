@@ -1,8 +1,6 @@
 package Diploma.src;
 
-import Diploma.DiplomaProj;
-import Diploma.src.Forms.*;
-import module_8.*;
+import Diploma.src.Forms_08.*;
 
 import javax.swing.*;
 import java.awt.*;

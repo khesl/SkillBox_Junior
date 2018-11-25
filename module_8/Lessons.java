@@ -1,6 +1,6 @@
 package module_8;
 
-import Diploma.DiplomaProj;
+import Diploma.src.DiplomaProj;
 
 import javax.swing.*;
 import java.awt.*;

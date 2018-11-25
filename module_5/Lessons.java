@@ -1,6 +1,6 @@
 package module_5;
 
-import Diploma.DiplomaProj;
+import Diploma.src.DiplomaProj;
 import Utils.ConsoleColor;
 import org.javagram.response.object.UserContact;
 

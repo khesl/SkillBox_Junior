@@ -1,4 +1,4 @@
-package Diploma.src.Forms;
+package Diploma.src.Forms_08;
 
 import Diploma.src.Main;
 

@@ -1,61 +1,34 @@
-package Diploma.src.Forms;
+package Diploma.src.Forms_08;
 
 import Diploma.src.Main;
-import Utils.MyUtils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.IOException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-public class StartSignInForm {
+public class AddContactsForm {
     private static Main main = null;
     private final String CODE_NUM_PATTERN = "+7(___)";
     private final String BODY_NUM_PATTERN = "___-__-__";
 
 
     private JPanel rootPanel;
-    private JPanel topPanel;
-    private JTextField numField;
-    private JButton okButton;
-    private JLabel numInfoLabel;
-    private JLabel labelNumber;
-    private JLabel numInfoLabel2;
+    private JPanel bottomPanel;
     private JPanel centerPanel;
+    private JLabel mainLabel;
+    private JLabel labelNumber;
     private JTextField codeNumField;
+    private JTextField numField;
+    private JTextField nameTextField;
+    private JTextField surnameTextField;
+    private JButton addContactButton;
+    private JLabel backButton;
 
-    public StartSignInForm(Main main) {
+    public AddContactsForm(Main main) {
         this.main = main;
 
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String number = codeNumField.getText() + numField.getText();
-                    System.out.println(number);
-                    if (!MyUtils.checkPhoneNumber(number))
-                        JOptionPane.showMessageDialog(getRootPanel(), "Неверно введён номер", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                    else {
-                        main.getDiplomApp().setPhone(MyUtils.getPhoneNumber(number));
-                        main.getDiplomApp().getSmsAuthorisation();
-                        main.getFrame_1().setVisible(false);
-                        main.getFrame_2().setVisible(true);
-                        main.getCodeSignForm().startTimer(30);
-                    }
-                } catch (IOException e1) {
-                    //e1.printStackTrace();
-                    System.out.println(e1.getMessage());
-                    if (e1.getMessage().equals(null)){
-                        JOptionPane.showMessageDialog(getRootPanel(), "Тайм Аут ошибка соединения с Telegram", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    } else if (e1.getMessage().equals("PHONE_NUMBER_INVALID") || e1.getMessage().equals("Please write correct number.")){
-                        JOptionPane.showMessageDialog(getRootPanel(), "Неверный номер телефона!", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    } else
-                    JOptionPane.showMessageDialog(getRootPanel(), "Ошибка соединения с Telegram", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
+
         codeNumField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -110,11 +83,7 @@ public class StartSignInForm {
             @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(main.backgroundImage, 0, 0, null);
-
-                g.setColor(new Color(39,74,112));
-                g.drawLine(365, 375, 565, 375);
-
+                g.drawImage(main.background_320x240_85_opacity_Image, 0, 0, null);
             }};
     }
 }

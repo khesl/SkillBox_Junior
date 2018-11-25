@@ -1,6 +1,6 @@
 package JUnitTests;
 
-import Diploma.DiplomaProj;
+import Diploma.src.DiplomaProj;
 import org.junit.Assert;
 import org.junit.Test;
 

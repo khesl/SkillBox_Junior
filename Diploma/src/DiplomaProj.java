@@ -1,4 +1,4 @@
-package Diploma;
+package Diploma.src;
 
 import Utils.ConsoleColor;
 import org.javagram.TelegramApiBridge;
