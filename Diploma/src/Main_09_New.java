@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 public class Main_09_New implements CoreTelegramContainerInt {
     private JFrame frame_1;
+    private JFrame frame_7;
     private StartSignInForm startSignInForm;
     private CodeSignForm codeSignForm;
     private MainForm mainForm;
@@ -19,8 +20,9 @@ public class Main_09_New implements CoreTelegramContainerInt {
     private EditProfileForm editProfileForm;
     private AddContactsForm addContactsForm;
     private EditContactsForm editContactsForm;
+    //private BorderBarForm borderBarForm;
     private static DiplomaProj diplomApp = new DiplomaProj();
-    private static final boolean IS_DRY_CALL = true; // true - холостой вызов/не стучится в телеграм
+    private static final boolean IS_DRY_CALL = true; // true - холостой вызов/не стучится в телеграм / false - боевой запрос
 
     public static void main(String[] args) throws Exception {
         Main_09_New main = new Main_09_New();
@@ -76,21 +78,29 @@ public class Main_09_New implements CoreTelegramContainerInt {
             throw new RuntimeException(e);
         }*/
 
-            //frame_1.setUndecorated(true); // убрать системные бордеры у окна!
+        //frame_1.setUndecorated(true); // убрать системные бордеры у окна!
+
         frame_1.setResizable(false); // запретить изменение размеров окна (это знал, но всё равно полезно)
         frame_1.setVisible(true);
+        //frame_7.setVisible(true);
     }
 
     private static JFrame createMainFrame(JPanel panel, String formName, Dimension dimension){
         JFrame frame = new JFrame();
 
-
         frame.setContentPane(panel);
+        // попытка сделать общую верхнюю часть.. сильно меняется логика окон
+        /*frame.setLayout(new BorderLayout());
+        frame.add(barPanel, BorderLayout.NORTH);
+        frame.add(panel, BorderLayout.CENTER);
+        Border border = BorderFactory.createLineBorder(new Color(39, 74, 112), 1, false);
+        ((JPanel) frame.getContentPane()).setBorder(border);*/
+
         /*frame.setContentPane(new JPanel(new BorderLayout()) {
                 @Override public void paintComponent(Graphics g) {
                     g.drawImage(backgroundImage, 0, 0, null);
                 }
-            });*/
+    });*/
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setSize(dimension.width, dimension.height);
         frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
@@ -103,7 +113,8 @@ public class Main_09_New implements CoreTelegramContainerInt {
         frame_1.setExtendedState(JFrame.ICONIFIED);// this.getExtendedState());
     }
     public void closeMainFrame(){
-        frame_1.dispose(); // освбождает ресурсы, но Апп умирает не сразу.. скорее всего при удалении мусорщиком.
+        //frame_1.dispose(); // освбождает ресурсы, но Апп умирает не сразу.. скорее всего при удалении мусорщиком.
+        System.exit(0);
         // предполагаю, что может не закрыть приложение,
         // когда вдруг останутся вызванные и забытые ресурсы, может ли такое быть?
     }
@@ -182,7 +193,7 @@ public class Main_09_New implements CoreTelegramContainerInt {
     public void updateContacts(){
         try {
             getModel().clear();
-            for (UserContact contact : getDiplomApp().getTelegramApiBridge().contactsGetContacts())
+            if (!IS_DRY_CALL) for (UserContact contact : getDiplomApp().getTelegramApiBridge().contactsGetContacts())
                 getModel().addElement(contact);
         } catch (Exception e) {
             e.printStackTrace();
@@ -190,7 +201,7 @@ public class Main_09_New implements CoreTelegramContainerInt {
         }
     }
 
-    enum ContentPanes{
+    public enum ContentPanes{
         startSignUp,
         startSignIn,
         main,
@@ -224,6 +235,10 @@ public class Main_09_New implements CoreTelegramContainerInt {
                     frame_1.setContentPane(mainForm.getRootPanel());
                     System.out.println("here");
                     break;
+                } else {
+                    // недостаточно условия для отлова инициируемой формы.. предположительно можно передавать ещё и форму инициатора..
+                    frame_1.setContentPane(mainForm.getRootPanel());
+                    break;
                 }
             }
             case codeSign: {
@@ -239,6 +254,18 @@ public class Main_09_New implements CoreTelegramContainerInt {
                 // окно добавления контакта, может быть вызвано только из главной формы, при нажатии на добавление.
                 if(frame_1.getContentPane() == mainForm.getRootPanel())
                 {
+                    System.out.println("go to addContacts");
+                    //frame_1.setContentPane(codeSignForm.getRootPanel());
+
+                    JPanel over = new JPanel();
+                    over.setOpaque(false);
+                    LayoutManager overlay = new OverlayLayout(over);
+                    over.setLayout(overlay);
+                    over.add(addContactsForm.getRootPanel());
+                    over.add(mainForm.getRootPanel());
+                    frame_1.setContentPane(over);
+
+                    //frame_1.setContentPane(editContactsForm.getRootPanel());
                     break;
                 }
             }
@@ -246,6 +273,17 @@ public class Main_09_New implements CoreTelegramContainerInt {
                 // может быть вызвано только из главной формы.
                 if(frame_1.getContentPane() == mainForm.getRootPanel())
                 {
+                    System.out.println("go to editProfile");
+                    JPanel over = new JPanel();
+                    over.setOpaque(false);
+                    LayoutManager overlay = new OverlayLayout(over);
+                    over.setLayout(overlay);
+                    over.add(editProfileForm.getRootPanel());
+                    over.add(mainForm.getRootPanel());
+
+                    editProfileForm.getUserPhoneLabel().setText(startSignInForm.getCodeNumField().getText() + startSignInForm.getNumField().getText());
+
+                    frame_1.setContentPane(over);
                     break;
                 }
             }
@@ -253,6 +291,18 @@ public class Main_09_New implements CoreTelegramContainerInt {
                 // может быть вызвано только из главной формы.
                 if(frame_1.getContentPane() == mainForm.getRootPanel())
                 {
+                    System.out.println("go to editContacts");
+                    //frame_1.setContentPane(codeSignForm.getRootPanel());
+
+                    JPanel over = new JPanel();
+                    over.setOpaque(false);
+                    LayoutManager overlay = new OverlayLayout(over);
+                    over.setLayout(overlay);
+                    over.add(editContactsForm.getRootPanel());
+                    over.add(mainForm.getRootPanel());
+                    frame_1.setContentPane(over);
+
+                    //frame_1.setContentPane(editContactsForm.getRootPanel());
                     break;
                 }
             }

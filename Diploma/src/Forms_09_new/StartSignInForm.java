@@ -16,7 +16,6 @@ public class StartSignInForm {
 
 
     private JPanel rootPanel;
-    private JPanel topPanel;
     private JTextField numField;
     private JButton okButton;
     private JLabel numInfoLabel;
@@ -24,11 +23,11 @@ public class StartSignInForm {
     private JLabel numInfoLabel2;
     private JPanel centerPanel;
     private JTextField codeNumField;
-    private JPanel hidePanel;
-    private JPanel closePanel;
 
     public StartSignInForm(Main_09_New main) {
         this.main = main;
+        BorderBarForm borderBarForm = new BorderBarForm(this.main);
+        rootPanel.add(borderBarForm.getRootPanel(), BorderLayout.NORTH);
 
         okButton.addActionListener(new ActionListener() {
             @Override
@@ -75,69 +74,6 @@ public class StartSignInForm {
                 e.consume();
             }
         });
-        hidePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent mouseEvent) {
-                super.mouseEntered(mouseEvent);
-                hidePanel.getGraphics().drawImage(main.hideButtonOnCursor, 0, 0, null);
-            }
-        });
-        hidePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseExited(MouseEvent mouseEvent) {
-                super.mouseExited(mouseEvent);
-                hidePanel.getGraphics().drawImage(main.hideButton, 0, 0, null);
-            }
-        });
-        hidePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent mouseEvent) {
-                super.mouseClicked(mouseEvent);
-                main.hideMainFrame();
-            }
-        });
-        closePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent mouseEvent) {
-                super.mouseEntered(mouseEvent);
-                closePanel.getGraphics().drawImage(main.closeButtonOnCursor, 0, 0, null);
-            }
-        });
-        closePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseExited(MouseEvent mouseEvent) {
-                super.mouseExited(mouseEvent);
-                closePanel.getGraphics().drawImage(main.closeButton, 0, 0, null);
-            }
-        });
-        closePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent mouseEvent) {
-                super.mouseClicked(mouseEvent);
-                main.closeMainFrame();
-            }
-        });
-        topPanel.addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent mouseEvent) {
-                super.mouseDragged(mouseEvent);
-                main.moveMainframe(mouseEvent);
-            }
-        });
-        topPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent mouseEvent) {
-                super.mousePressed(mouseEvent);
-                main.setTopBarMousePressed(true, mouseEvent);
-            }
-        });
-        topPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent mouseEvent) {
-                super.mouseReleased(mouseEvent);
-                main.setTopBarMousePressed(false, mouseEvent);
-            }
-        });
     }
 
     public static String getPatternUpdate(String source, char input, String pattern){
@@ -163,20 +99,9 @@ public class StartSignInForm {
                 g.drawImage(main.logo, 390, 50, null);
 
                 g.setColor(new Color(39,74,112));
-                g.drawLine(365, 393, 565, 393);
-            }};
-        hidePanel = new JPanel(){
-            @Override
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(main.hideButton, 0, 0, null);
-            }};
-        closePanel = new JPanel(){
-            @Override
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(main.closeButton, 0, 0, null);
-            }};
+                g.drawLine(370, 396, 570, 396);
+            }
+        };
     }
 
 

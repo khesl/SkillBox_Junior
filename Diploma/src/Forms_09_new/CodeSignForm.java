@@ -14,7 +14,6 @@ public class CodeSignForm implements MyTimerInterface {
 
     private static Main_09_New main = null;
     private JPanel rootPanel;
-    private JPanel topPanel;
     private JPasswordField codeField;
     private JButton okButton;
     private JLabel telNumLabel;
@@ -26,13 +25,12 @@ public class CodeSignForm implements MyTimerInterface {
     private JLabel codeInfoLabel2;
     private JLabel codeInfoLabel3;
     private JPanel centerPanel;
-    private JPanel hidePanel;
-    private JPanel closePanel;
 
     public CodeSignForm(Main_09_New main) {
         this.main = main;
         //codeField.setBackground(new Color(251,251,251,50));
-
+        BorderBarForm borderBarForm = new BorderBarForm(this.main);
+        rootPanel.add(borderBarForm.getRootPanel(), BorderLayout.NORTH);
 
         failTimerButton.addActionListener(new ActionListener() {
             @Override
@@ -58,69 +56,6 @@ public class CodeSignForm implements MyTimerInterface {
                     getRootPanel().getToolkit().beep();
                     e.consume();
                 }
-            }
-        });
-        hidePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent mouseEvent) {
-                super.mouseEntered(mouseEvent);
-                hidePanel.getGraphics().drawImage(main.hideButtonOnCursor, 0, 0, null);
-            }
-        });
-        hidePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseExited(MouseEvent mouseEvent) {
-                super.mouseExited(mouseEvent);
-                hidePanel.getGraphics().drawImage(main.hideButton, 0, 0, null);
-            }
-        });
-        hidePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent mouseEvent) {
-                super.mouseClicked(mouseEvent);
-                main.hideMainFrame();
-            }
-        });
-        closePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent mouseEvent) {
-                super.mouseEntered(mouseEvent);
-                closePanel.getGraphics().drawImage(main.closeButtonOnCursor, 0, 0, null);
-            }
-        });
-        closePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseExited(MouseEvent mouseEvent) {
-                super.mouseExited(mouseEvent);
-                closePanel.getGraphics().drawImage(main.closeButton, 0, 0, null);
-            }
-        });
-        closePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent mouseEvent) {
-                super.mouseClicked(mouseEvent);
-                main.closeMainFrame();
-            }
-        });
-        topPanel.addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent mouseEvent) {
-                super.mouseDragged(mouseEvent);
-                main.moveMainframe(mouseEvent);
-            }
-        });
-        topPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent mouseEvent) {
-                super.mousePressed(mouseEvent);
-                main.setTopBarMousePressed(true, mouseEvent);
-            }
-        });
-        topPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent mouseEvent) {
-                super.mouseReleased(mouseEvent);
-                main.setTopBarMousePressed(false, mouseEvent);
             }
         });
     }
@@ -174,18 +109,6 @@ public class CodeSignForm implements MyTimerInterface {
                 super.paintComponent(g);
                 g.drawImage(main.backgroundImage, 0, 23, null);
                 g.drawImage(main.logo, 390, 50, null);
-            }};
-        hidePanel = new JPanel(){
-            @Override
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(main.hideButton, 0, 0, null);
-            }};
-        closePanel = new JPanel(){
-            @Override
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(main.closeButton, 0, 0, null);
             }};
     }
 

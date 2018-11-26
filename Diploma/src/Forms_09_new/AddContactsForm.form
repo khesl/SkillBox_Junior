@@ -5,35 +5,45 @@
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
     <properties>
-      <maximumSize width="320" height="240"/>
+      <background color="-15132391"/>
+      <maximumSize width="2147483647" height="2147483647"/>
       <minimumSize width="320" height="240"/>
-      <opaque value="false"/>
+      <opaque value="true"/>
       <preferredSize width="320" height="240"/>
     </properties>
     <border type="none"/>
     <children>
       <grid id="c8984" binding="bottomPanel" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
+        <margin top="10" left="10" bottom="10" right="0"/>
         <constraints border-constraint="South"/>
         <properties>
           <opaque value="false"/>
         </properties>
         <border type="none"/>
         <children>
-          <component id="6de10" class="javax.swing.JLabel" binding="backButton">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <foreground color="-1"/>
-              <text value="&lt;&lt;&lt;"/>
-            </properties>
-          </component>
           <hspacer id="654a8">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
           </hspacer>
+          <grid id="6a0e7" binding="backPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <opaque value="false"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="3944d" class="javax.swing.JLabel" binding="backIcon">
+                <constraints/>
+                <properties>
+                  <icon value="Diploma/src/Image/GUI Components/icon-back.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+            </children>
+          </grid>
         </children>
       </grid>
       <grid id="46ad0" binding="centerPanel" layout-manager="GridLayoutManager" row-count="9" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -49,24 +59,28 @@
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font size="16"/>
-              <foreground color="-14202246"/>
+              <font size="32"/>
+              <foreground color="-16731161"/>
               <text value="Добавление контакта"/>
             </properties>
           </component>
-          <component id="12d52" class="javax.swing.JLabel">
+          <component id="12d52" class="javax.swing.JLabel" binding="infoLabel1">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font size="16"/>
+              <foreground color="-1"/>
               <text value="Введите код страны и номер"/>
             </properties>
           </component>
-          <component id="97cdb" class="javax.swing.JLabel">
+          <component id="97cdb" class="javax.swing.JLabel" binding="infoLabel2">
             <constraints>
               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font size="16"/>
+              <foreground color="-1"/>
               <text value="мобильного телефона пользователя"/>
             </properties>
           </component>
@@ -90,9 +104,9 @@
               <component id="d75a0" class="javax.swing.JTextField" binding="codeNumField">
                 <constraints/>
                 <properties>
-                  <background color="-263173"/>
+                  <background color="-15132391"/>
                   <font size="14" style="2"/>
-                  <foreground color="-14202256"/>
+                  <foreground color="-1"/>
                   <horizontalAlignment value="2"/>
                   <maximumSize width="60" height="30"/>
                   <minimumSize width="60" height="30"/>
@@ -105,10 +119,10 @@
                 <constraints/>
                 <properties>
                   <alignmentX value="0.5"/>
-                  <background color="-263173"/>
+                  <background color="-15132391"/>
                   <focusable value="true"/>
                   <font size="14" style="2"/>
-                  <foreground color="-14202256"/>
+                  <foreground color="-1"/>
                   <horizontalAlignment value="2"/>
                   <maximumSize width="70" height="30"/>
                   <minimumSize width="70" height="30"/>
@@ -122,29 +136,29 @@
           <component id="6a636" class="javax.swing.JTextField" binding="nameTextField">
             <constraints>
               <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
+                <preferred-size width="175" height="-1"/>
               </grid>
             </constraints>
             <properties>
+              <font size="16"/>
+              <foreground color="-1"/>
+              <horizontalAlignment value="0"/>
+              <opaque value="false"/>
               <text value="Имя"/>
             </properties>
           </component>
           <component id="fc54c" class="javax.swing.JTextField" binding="surnameTextField">
             <constraints>
               <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
+                <preferred-size width="175" height="-1"/>
               </grid>
             </constraints>
             <properties>
+              <font size="16"/>
+              <foreground color="-1"/>
+              <horizontalAlignment value="0"/>
+              <opaque value="false"/>
               <text value="Фамилия"/>
-            </properties>
-          </component>
-          <component id="f6615" class="javax.swing.JButton" binding="addContactButton">
-            <constraints>
-              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Добавить"/>
             </properties>
           </component>
           <vspacer id="47c4b">
@@ -167,6 +181,33 @@
               <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
           </hspacer>
+          <grid id="e9e31" binding="saveButton" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <minimum-size width="150" height="40"/>
+                <preferred-size width="150" height="40"/>
+                <maximum-size width="150" height="40"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-16731162"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="db174" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <foreground color="-1"/>
+                  <text value="ДОБАВИТЬ"/>
+                  <verticalAlignment value="0"/>
+                  <verticalTextPosition value="0"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
         </children>
       </grid>
     </children>
