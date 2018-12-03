@@ -91,7 +91,7 @@
                 <properties>
                   <background color="-1644826"/>
                 </properties>
-                <border type="none"/>
+                <border type="none" title="ц"/>
                 <children>
                   <grid id="cbd0" binding="addContact" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="1">
                     <constraints>

@@ -1,5 +1,6 @@
 package Utils;
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -72,5 +73,18 @@ public class MyUtils {
         if (source.contains("_"))
             source = source.replaceFirst("_", String.valueOf(input));
         return source;
+    }
+
+    public static void deepIntoTheFile(File file){
+        deepIntoTheFile(file, 0);
+    }
+    private static void deepIntoTheFile(File file, int deep){
+        String tab = "";
+        for (int i = 0; i<deep; i++) tab += "\t";
+        System.out.println(tab + file.getName() + ConsoleColor.setColor("\t\t" + file.length(), ConsoleColor.ANSI_BLUE));
+        for (File f : file.listFiles()){
+            if (f.isDirectory()) deepIntoTheFile(f, deep + 1);
+            else System.out.println(tab + "\t" + f.getName() + ConsoleColor.setColor("\t\t" + f.length(), ConsoleColor.ANSI_BLUE));
+        }
     }
 }
