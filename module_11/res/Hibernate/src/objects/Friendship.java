@@ -1,8 +1,6 @@
 package module_11.res.Hibernate.src.objects;
 
-import com.dropbox.core.v2.teamlog.EmmChangePolicyDetails;
-
-public class Friendship {
+public class Friendship extends Beans{
     private int id;
     private Employee friendingId;
     private Employee friendedId;
@@ -20,4 +18,48 @@ public class Friendship {
     public Employee getFriendedId() { return friendedId; }
     public void setFriendedId(Employee friendedId) { this.friendedId = friendedId; }
 
+    public enum Parameters{
+        friendingId    (Employee.class),
+        friendedId    (Employee.class);
+
+        private Class<?> classType;
+
+        Parameters(Class<?> classType){
+            this.classType = classType;
+        }
+
+        public Class<?> getClassType() {
+            return classType;
+        }
+    }
+
+    @Override
+    public void setParam(String param, Object value) {
+        switch (Parameters.valueOf(param)){
+            case friendingId: setFriendingId((Employee) value); break;
+            case friendedId: setFriendedId((Employee) value); break;
+        }
+    }
+
+    @Override
+    public Object getParam(String param){
+        switch (Parameters.valueOf(param)) {
+            case friendingId: return getFriendingId();
+            case friendedId: return getFriendedId();
+            default: return null;
+        }
+    }
+
+    @Override
+    public String[] getParameters(){
+        String[] strs = new String[Parameters.values().length];
+        int count = 0;
+        for (Parameters param: Parameters.values())
+            strs[count++] = param.toString();
+        return strs;
+    }
+    @Override
+    public Class<?> getParamClasstype(String param) {
+        return Parameters.valueOf(param).getClassType();
+    }
 }
