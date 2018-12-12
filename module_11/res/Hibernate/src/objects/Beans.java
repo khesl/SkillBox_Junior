@@ -27,6 +27,7 @@ public abstract class Beans {
     public abstract void setParam(String param, Object value);
     public abstract Object getParam(String param);
 
+    @Override
     public String toString(){
         String str = "[";
         for (Parameters param : Parameters.values())

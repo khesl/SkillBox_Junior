@@ -103,4 +103,16 @@ public class Employee extends Beans {
     public Class<?> getParamClasstype(String param) {
         return Parameters.valueOf(param).getClassType();
     }
+
+    @Override
+    public String toString(){
+        String str = "[";
+        for (Parameters param : Parameters.values())
+            if (param == Parameters.department)
+                str += "{\"" + param.toString() + "\":\"" + getDepartment().getId() + "\"}, ";
+            else
+            str += "{\"" + param.toString() + "\":\"" + getParam(param.toString()).toString() + "\"}, ";
+        str = str.substring(0, str.length()-1) + "]";
+        return str;
+    }
 }

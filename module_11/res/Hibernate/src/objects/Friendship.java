@@ -62,4 +62,13 @@ public class Friendship extends Beans{
     public Class<?> getParamClasstype(String param) {
         return Parameters.valueOf(param).getClassType();
     }
+
+    @Override
+    public String toString(){
+        String str = "[";
+        for (Parameters param : Parameters.values())
+            str += "{\"" + param.toString() + "\":\"" + getParam(param.toString()).toString() + "\"}, ";
+        str = str.substring(0, str.length()-1) + "]";
+        return str;
+    }
 }
