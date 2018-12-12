@@ -7,7 +7,8 @@ import java.util.Calendar;
 import java.util.Properties;
 
 public class MyParametersController {
-    private static final String CONFIG_PATH = "F:\\files\\java\\JavaExperiments\\SkillBox_Junior\\resources\\config.ini";//"src/main/resources/config.ini";
+    //private static final String CONFIG_PATH = "F:\\files\\java\\JavaExperiments\\SkillBox_Junior\\resources\\config.ini";//"src/main/resources/config.ini";
+    private static final String CONFIG_PATH = "resources\\config.ini";//"src/main/resources/config.ini";
 
     public MyParametersController(){ super(); }
 

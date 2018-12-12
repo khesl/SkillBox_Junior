@@ -11,8 +11,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -23,20 +21,11 @@ public class Lesson_add {
     private static Scanner scanner;
     private static SessionFactory sessionFactory;
 
-    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchFieldException {
+    public static void main(String[] args) {
         scanner = new Scanner(System.in);
+        Lesson_add la = new Lesson_add();
 
-
-        Department bean = (Department) Class.forName("module_11.res.Hibernate.src.objects.Department").newInstance();
-        for (String param : bean.getParameters()){
-            System.out.println(param + " " + bean.getParamClasstype(param).getName());
-        }
-        for (Method field : Department.class.getDeclaredMethods())
-            System.out.println(field.getName() + "'" + field.toString() + "'");
-
-        System.out.println("->" + Department.class.getSuperclass().getName());
-
-
+        la.Method();
     }
 
     private enum Command{
@@ -61,7 +50,7 @@ public class Lesson_add {
     }
     private enum Permission{
         user,
-        admin;
+        admin
     }
     private enum Tables{
         vacation    (Vacation.class, "Vacation"),
@@ -95,7 +84,14 @@ public class Lesson_add {
         System.out.println(ConsoleColor.setColor("robot# Hello, what do you want? (help, exit)", ConsoleColor.Color.ANSI_YELLOW));
         System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
         while (!(in = scanner.nextLine()).toLowerCase().equals("exit")){
-            Command command = Command.valueOf(in);
+            Command command;
+            try {
+                command = Command.valueOf(in);
+            } catch (Exception e){
+                if (!in.equals("")) System.out.println(ConsoleColor.setColor("robot# Try to write new command. (help)", ConsoleColor.Color.ANSI_YELLOW));
+                System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
+                continue;
+            }
             switch (command){
                 case tables:{
                     for (Tables table: Tables.values()){
@@ -129,6 +125,7 @@ public class Lesson_add {
                     System.out.print(ConsoleColor.setColor("robot# Please, tell me your ", ConsoleColor.Color.ANSI_YELLOW));
                     System.out.print(ConsoleColor.setColor( "admin", ConsoleColor.Color.ANSI_RED));
                     System.out.println(ConsoleColor.setColor(" password. Nobody will know that. (root)", ConsoleColor.Color.ANSI_YELLOW));
+                    System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
                     try {
                         if ((in = scanner.nextLine()).equals(MyParametersController.getProperties("db_rot_pass"))) {
                             permit = Permission.admin;
@@ -136,7 +133,11 @@ public class Lesson_add {
                             System.out.print(ConsoleColor.setColor( "admin", ConsoleColor.Color.ANSI_RED));
                             System.out.println(ConsoleColor.setColor("'.", ConsoleColor.Color.ANSI_YELLOW));
                         } else { System.out.println(ConsoleColor.setColor("robot# Sorry, i can't promote you higher.", ConsoleColor.Color.ANSI_YELLOW)); }
-                    } catch (IOException e) {} break;
+                    } catch (IOException e) {
+                        System.out.println("Ошибка?");
+                        System.out.println("ввод:" + in);
+                        e.printStackTrace();
+                    } break;
                 }
                 case set: {
                     System.out.println(ConsoleColor.setColor("robot# Please choose the table:", ConsoleColor.Color.ANSI_YELLOW));

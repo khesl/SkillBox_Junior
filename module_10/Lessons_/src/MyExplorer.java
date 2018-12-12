@@ -17,7 +17,7 @@ public class MyExplorer {
     private JButton enterButton;
     private JList explorerList;
     private JButton selectPathButton;
-    private JTextPane conlose;
+    private JTextPane console;
     private JTextField pathField;
     private JButton button1;
     private JButton button2;
@@ -138,7 +138,7 @@ public class MyExplorer {
     }
 
     public JPanel getRootPanel(){ return rootPanel; }
-    public JTextPane getConlose() {return conlose; }
+    public JTextPane getConsole() {return console; }
     public JList getExplorerList() { return explorerList; }
     public ExplorerObject getSelectedObject(){
         return model.get(explorerList.getSelectedIndex()<0?0:explorerList.getSelectedIndex());

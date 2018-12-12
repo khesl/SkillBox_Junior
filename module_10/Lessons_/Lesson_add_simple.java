@@ -1,9 +1,6 @@
 package module_10.Lessons_;
 
-import Utils.ConsoleColor;
-import Utils.MyUtils;
 import module_10.Lessons_.src.ExplorerObject;
-import module_10.Lessons_.src.MyExplorer;
 import module_10.Lessons_.src.MyExplorerSimple;
 import org.json.simple.parser.ParseException;
 
@@ -15,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Lesson_add {
+public class Lesson_add_simple {
     private static Scanner scanner;
 
     public static void main(String[] args) throws IOException, ParseException {
         scanner = new Scanner(System.in);
-        Lesson_add main = new Lesson_add();
+        Lesson_add_simple main = new Lesson_add_simple();
 
         //deepIntoTheFile(new File("F:\\files\\java"));
 
@@ -28,10 +25,10 @@ public class Lesson_add {
     }
 
     private JFrame frame;
-    private MyExplorer myExplorer;
+    private MyExplorerSimple myExplorer;
     private void StartForm(){
 
-        myExplorer = new MyExplorer(this);
+        myExplorer = new MyExplorerSimple(this);
         frame = createMainFrame(myExplorer.getRootPanel(), "Проводник", new Dimension(640,480));
         //frame.setUndecorated(true); // убрать системные бордеры у окна!
 
@@ -62,12 +59,12 @@ public class Lesson_add {
 
     public List<ExplorerObject> getFiles() { return files; }
     public void setFiles(ArrayList<ExplorerObject> files) { this.files = files; }
-    public void updateFiles() {
+    /*public void updateFiles() {
         files.clear();
         files = deepIntoTheFile(curFile);
         myExplorer.updateFiles();
         System.out.println("updateFiles() " + files.size());
-    }
+    }*/
     public static List<ExplorerObject> deepIntoTheFile(ExplorerObject object){
         File file = object.getFile();
         List<ExplorerObject> files = new ArrayList<>();
@@ -139,7 +136,7 @@ public class Lesson_add {
         return files;
     }*/
 
-    public enum ExplorerCommand {
+    /*public enum ExplorerCommand {
         in      ("in    - команда чтобы войти в директорию;"),
         out     ("out   - команда чтобы выйти на уровень выше;"),
         help    ("help  - посмотреть список команд.");
@@ -150,8 +147,8 @@ public class Lesson_add {
 
         private String description;
         public String getDescription() { return description; }
-    }
-    public void setCommand(ExplorerCommand explorerCommand){
+    }*/
+    /*public void setCommand(ExplorerCommand explorerCommand){
         switch (explorerCommand){
             case in:
                 if (getCurFile() == null) break;
@@ -178,5 +175,5 @@ public class Lesson_add {
                 myExplorer.getConsole().setText(myExplorer.getConsole().getText() + "\nconsole# wrong command.");
                 break;
         }
-    }
+    }*/
 }
