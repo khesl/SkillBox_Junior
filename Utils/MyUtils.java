@@ -1,5 +1,7 @@
 package Utils;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -86,5 +88,19 @@ public class MyUtils {
             if (f.isDirectory()) deepIntoTheFile(f, deep + 1);
             else System.out.println(tab + "\t" + f.getName() + ConsoleColor.setColor("\t\t" + f.length(), ConsoleColor.ANSI_BLUE));
         }
+    }
+
+    public static JFrame createMainFrame(JPanel panel, String formName, Dimension dimension){
+        JFrame frame = new JFrame();
+
+        frame.setContentPane(panel);
+
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setSize(dimension.width, dimension.height);
+        frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setTitle(formName);
+
+        return frame;
     }
 }

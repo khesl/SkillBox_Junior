@@ -39,13 +39,13 @@ public class Main_09_New implements CoreTelegramContainerInt {
     public static Image closeButtonOnCursor;
     private void StartForm(){
         try {
-            backgroundImage = javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\SkillBox_Junior\\Diploma\\src\\Image\\DSC_0351_722x480.jpg"));
-            background_320x240_85_opacity_Image = javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\SkillBox_Junior\\Diploma\\src\\Image\\320х240_85_opac.png"));
-            logo = javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\SkillBox_Junior\\Diploma\\src\\Image\\GUI Components\\logo.png"));
-            hideButton =  javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\SkillBox_Junior\\Diploma\\src\\Image\\GUI Components\\icon-hide.png"));;
-            hideButtonOnCursor =  javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\SkillBox_Junior\\Diploma\\src\\Image\\GUI Components\\icon-hide_onCursor.png"));;
-            closeButton =  javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\SkillBox_Junior\\Diploma\\src\\Image\\GUI Components\\icon-close.png"));;
-            closeButtonOnCursor =  javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\SkillBox_Junior\\Diploma\\src\\Image\\GUI Components\\icon-close_onCursor.png"));;
+            backgroundImage = javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\Diploma\\src\\Image\\DSC_0351_722x480.jpg"));
+            background_320x240_85_opacity_Image = javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\Diploma\\src\\Image\\320х240_85_opac.png"));
+            logo = javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\Diploma\\src\\Image\\GUI Components\\logo.png"));
+            hideButton =  javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\Diploma\\src\\Image\\GUI Components\\icon-hide.png"));;
+            hideButtonOnCursor =  javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\Diploma\\src\\Image\\GUI Components\\icon-hide_onCursor.png"));;
+            closeButton =  javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\Diploma\\src\\Image\\GUI Components\\icon-close.png"));;
+            closeButtonOnCursor =  javax.imageio.ImageIO.read(new File(new File("").getAbsolutePath() + "\\Diploma\\src\\Image\\GUI Components\\icon-close_onCursor.png"));;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
