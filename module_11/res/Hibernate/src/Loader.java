@@ -56,7 +56,7 @@ public class Loader
     private static void setUp()
     {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure(new File("SkillBox_Junior/module_11/res/Hibernate/src/config/hibernate.cfg.xml")) // configures settings from hibernate.config.xml
+                .configure(new File("module_11/res/Hibernate/src/config/hibernate.cfg.xml")) // configures settings from hibernate.config.xml
                 .build();
         // "SkillBox_Junior/src/HibernateRes/config/hibernate.cfg.xml"
         // "SkillBox_Junior/module_11/res/Hibernate/src/config/hibernate.cfg.xml"

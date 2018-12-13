@@ -111,6 +111,7 @@ public class Lesson_add {
                             System.out.println(ConsoleColor.setColor("\t" + beans.toString(), ConsoleColor.Color.ANSI_BLUE));
                     } catch(Exception e){
                         System.out.println(ConsoleColor.setColor("robot# That table does not exist.", ConsoleColor.Color.ANSI_YELLOW));
+                        e.printStackTrace();
                         //System.out.print(ConsoleColor.setColor("console# ", ConsoleColor.Color.ANSI_BLUE));
                     }
                     break;
@@ -360,7 +361,7 @@ public class Lesson_add {
     //=================================================
     private static void setUp() {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure(new File("SkillBox_Junior/module_11/res/Hibernate/src/config/hibernate.cfg.xml")) // configures settings from hibernate.config.xml
+                .configure(new File("module_11/res/Hibernate/src/config/hibernate.cfg.xml")) // configures settings from hibernate.config.xml
                 .build();
         // "SkillBox_Junior/src/HibernateRes/config/hibernate.cfg.xml"
         // "SkillBox_Junior/module_11/res/Hibernate/src/config/hibernate.cfg.xml"
