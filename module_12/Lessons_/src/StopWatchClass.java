@@ -30,7 +30,6 @@ public class StopWatchClass extends Thread {
     @Override
     public void run(){
         super.run();
-        int count = 0;
         while (true){
             if (!isInterrupted()){
                 if (!isPause()){
@@ -46,7 +45,6 @@ public class StopWatchClass extends Thread {
                     clockPanel.repaint();
                 }
             }
-            count++;
         }
 
     }

@@ -42,4 +42,9 @@ public class Account{
         money += amount;
     }
 
+    @Override
+    public String toString(){
+        return "Number: '" + accNumber + "', MoneyAmount: '" + money + "'";
+    }
+
 }
