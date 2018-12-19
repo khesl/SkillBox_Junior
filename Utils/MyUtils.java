@@ -2,7 +2,8 @@ package Utils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
+import java.io.*;
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -102,5 +103,57 @@ public class MyUtils {
         frame.setTitle(formName);
 
         return frame;
+    }
+
+    /** выкачать код страницы по ссылке в указанный файл
+     *
+     * @param link  - url ссылка на сайт
+     * @param path  - путь загрузки кода страницы
+     * */
+    public static boolean downloadUrl(String link, String path) throws IOException {
+        try {
+            URL url = new URL(link);
+
+            InputStream stream = url.openStream();
+            FileOutputStream fos = new FileOutputStream(path);
+
+            int code;
+            while ((code = stream.read()) > 0) {
+                fos.write(code);
+            }
+
+            fos.flush();
+            fos.close();
+        } catch (Exception e){
+            //throw new IOException("trouble with: '" + link + "'");
+            return false;
+        }
+        return true;
+    }
+
+    /** выкачать ресурс по ссылке в указанный файл
+     *
+     * @param link  - url ссылка на ресурс
+     * @param path  - путь загрузки кода страницы (пример: "F:\\files\\java\\JavaExperiments\\SkillBox_Junior\\module_10\\export\\img")
+     * */
+    public static boolean downloadResource(String link, String path) throws IOException {
+        // загрузка image в папку
+        URL url_ = new URL(link);
+        InputStream is = new BufferedInputStream(url_.openStream());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] buf = new byte[1024];
+        int n = 0;
+        while (-1 != (n = is.read(buf))) { out.write(buf, 0, n);}
+
+        out.close();
+        is.close();
+        byte[] response = out.toByteArray();
+
+        FileOutputStream fos = new FileOutputStream(path + "\\" + link.split(String.valueOf("/"))[link.split(String.valueOf("/")).length - 1]);
+
+        fos.write(response);
+        fos.flush();
+        fos.close();
+        return true;
     }
 }

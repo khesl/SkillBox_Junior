@@ -25,7 +25,7 @@ public class Lessons {
         Lesson_4();
         //Lesson_5_1();
         //Lesson_5_2();
-        //Lesson_6();
+        //Lesson_5();
     }
 
     private static void Lesson_2(){
