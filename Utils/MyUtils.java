@@ -114,6 +114,13 @@ public class MyUtils {
         try {
             URL url = new URL(link);
 
+            /*
+            URL obj = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+            conn.setInstanceFollowRedirects(true);  //you still need to handle redirect manully.
+            HttpURLConnection.setFollowRedirects(true);
+            */
+
             InputStream stream = url.openStream();
             FileOutputStream fos = new FileOutputStream(path);
 
