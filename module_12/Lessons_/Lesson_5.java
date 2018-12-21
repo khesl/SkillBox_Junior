@@ -20,8 +20,13 @@ public class Lesson_5 {
 
     public static void main(String[] args) throws IOException {
         Lesson_5 less = new Lesson_5();
-        TreeLinks links = less.FillTreeLinks("https://docs.oracle.com/en/");
-        System.out.println("loaded http map:\n" + links.toAllString());
+        //TreeLinks links = less.FillTreeLinks("https://docs.oracle.com/en/");
+        //TreeLinks links = less.FillTreeLinks("https://mail.ru");
+        //System.out.println("loaded http map:\n" + links.toAllString());
+        String str = "   d09ss-sch   2iku   h(o   idss   fdui)   ";
+        System.out.println("'" + str + "'");
+        str = str.trim();
+        System.out.println("'" + str + "'");
     }
 
     private volatile Map<Integer, TreeLinks> links = new HashMap<>();
