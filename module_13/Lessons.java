@@ -27,14 +27,17 @@ public class Lessons {
         char letters[] = {'У', 'К', 'Е', 'Н', 'Х', 'В', 'А', 'Р', 'О', 'С', 'М', 'Т'};
         for(int number = 1; number < 1000; number++)
         {
-            int regionCode = 199;
+            //int regionCode = 199;
+            for (int regionCode = 100; regionCode < 101; regionCode++)
             for (char firstLetter : letters)
             {
                 for (char secondLetter : letters)
                 {
                     for (char thirdLetter : letters) {
                         if (buffer.length() > bufferSize){
+                            long startWrite = System.currentTimeMillis();
                             writer.write(buffer.toString().getBytes());
+                            System.out.println(" write " + (System.currentTimeMillis() - startWrite) + " ms");
                             buffer = new StringBuilder();
                         }
 
