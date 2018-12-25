@@ -1,68 +1,30 @@
 package module_13;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import module_13.Lessons_.Lesson_2;
+import module_13.Lessons_.Lesson_3;
+
 import java.io.IOException;
 
 public class Lessons {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         lesson_2();
+        //lesson_3();
     }
 
-    private static void lesson_2() throws IOException {
+    private static void lesson_2() throws IOException, InterruptedException {
         // Урок 2. Оптимизация по времени
         //
         //- В проекте CarNumberGenerator внести сделанные в видео изменения и попробовать его дополнительно
         // оптимизировать, реализовыв вывод номеров одновременно в несколько файлов из нескольких потоков.
         // Измерить время, определить, насколько программа стала работать быстрее и объяснить,
 
-        long start = System.currentTimeMillis();
-
-        FileOutputStream writer = new FileOutputStream("module_13/res/CarNumberGenerator/res/numbers.txt");
-
-        StringBuilder buffer = new StringBuilder();
-        int bufferSize = 1_000_000;
-
-        char letters[] = {'У', 'К', 'Е', 'Н', 'Х', 'В', 'А', 'Р', 'О', 'С', 'М', 'Т'};
-        for(int number = 1; number < 1000; number++)
-        {
-            //int regionCode = 199;
-            for (int regionCode = 100; regionCode < 101; regionCode++)
-            for (char firstLetter : letters)
-            {
-                for (char secondLetter : letters)
-                {
-                    for (char thirdLetter : letters) {
-                        if (buffer.length() > bufferSize){
-                            long startWrite = System.currentTimeMillis();
-                            writer.write(buffer.toString().getBytes());
-                            System.out.println(" write " + (System.currentTimeMillis() - startWrite) + " ms");
-                            buffer = new StringBuilder();
-                        }
-
-                        buffer.append(firstLetter);
-                        if (number < 10) buffer.append("00");
-                        else if (number < 100) buffer.append("0");
-                        buffer.append(number)
-                                .append(secondLetter)
-                                .append(thirdLetter);
-
-                        if (regionCode < 10) buffer.append("0");
-                        buffer.append(regionCode)
-                                .append('\n');
-                    }
-                }
-            }
-        }
-
-        writer.write(buffer.toString().getBytes());
-        writer.flush();
-        writer.close();
-
-        System.out.println((System.currentTimeMillis() - start) + " ms");
-
-
+        /**
+         * задание выполнено в отдельном файле по уроку
+         * module_13.Lessons_.Lesson_2
+         * */
+        Lesson_2 less = new Lesson_2();
+        less.lesson_2(0, 10, 10);
     }
 
 
@@ -72,7 +34,9 @@ public class Lessons {
         //- Написать просмотрщик (или, лучше, редактор) больших файлов. Он должен уметь просматривать
         // файлы любого размера, не занимая при этом много оперативной памяти. Для примера файла можно
         // использовать файл размером 1,5 Gb, имеющийся в проекте VoteAnalyzer.
+        Lesson_3 less = new Lesson_3();
 
+        less.lesson_3();
     }
 
 

@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/** 12 модуль */
 public class Lesson_5 {
 
     public static void main(String[] args) throws IOException {
@@ -23,10 +24,6 @@ public class Lesson_5 {
         //TreeLinks links = less.FillTreeLinks("https://docs.oracle.com/en/");
         //TreeLinks links = less.FillTreeLinks("https://mail.ru");
         //System.out.println("loaded http map:\n" + links.toAllString());
-        String str = "   d09ss-sch   2iku   h(o   idss   fdui)   ";
-        System.out.println("'" + str + "'");
-        str = str.trim();
-        System.out.println("'" + str + "'");
     }
 
     private volatile Map<Integer, TreeLinks> links = new HashMap<>();

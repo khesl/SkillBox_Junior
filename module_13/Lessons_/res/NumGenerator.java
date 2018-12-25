@@ -4,27 +4,33 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class NumGenerator extends Thread{
-    private int bufferSize;
+    private int bufferSize = 1_000_000;
     private int minGenerateValue;
     private int maxGenerateValue;
     private String name;
     private MyFileWriter writer_;
     private boolean localWriter = false;
 
-    public NumGenerator(int minGenerateValue, int maxGenerateValue, int bufferSize, String name, MyFileWriter writer){
+    public NumGenerator(int minGenerateValue, int maxGenerateValue, String name){
         if (minGenerateValue > maxGenerateValue) throw new IllegalArgumentException("Min value must be less than Max value.");
         this.minGenerateValue = minGenerateValue;
         this.maxGenerateValue = maxGenerateValue;
-        this.bufferSize = bufferSize;
         this.name = name;
+    }
+    public NumGenerator(int minGenerateValue, int maxGenerateValue, int bufferSize, String name, MyFileWriter writer){
+        this(minGenerateValue, maxGenerateValue, name);
+        this.bufferSize = bufferSize;
         writer_ = writer;
     }
     public NumGenerator(int minGenerateValue, int maxGenerateValue, int bufferSize, String name, String filePath) throws FileNotFoundException {
-        if (minGenerateValue > maxGenerateValue) throw new IllegalArgumentException("Min value must be less than Max value.");
-        this.minGenerateValue = minGenerateValue;
-        this.maxGenerateValue = maxGenerateValue;
+        this(minGenerateValue, maxGenerateValue, name);
         this.bufferSize = bufferSize;
-        this.name = name;
+        writer_ = new MyFileWriter(filePath);
+        localWriter = true;
+    }
+
+    public NumGenerator(int minGenerateValue, int maxGenerateValue, String name, String filePath) throws FileNotFoundException {
+        this(minGenerateValue, maxGenerateValue, name);
         writer_ = new MyFileWriter(filePath);
         localWriter = true;
     }
@@ -34,7 +40,6 @@ public class NumGenerator extends Thread{
         while(!interrupted()) {
             System.out.println(name + " start." + "from '" + minGenerateValue + "' to '" + maxGenerateValue + "'");
             long start = System.currentTimeMillis();
-            StringBuilder buffer = new StringBuilder();
 
             char letters[] = {'У', 'К', 'Е', 'Н', 'Х', 'В', 'А', 'Р', 'О', 'С', 'М', 'Т'};
             for(int number = minGenerateValue; number < maxGenerateValue; number++){
@@ -45,7 +50,8 @@ public class NumGenerator extends Thread{
                         for (char secondLetter : letters)
                         {
                             for (char thirdLetter : letters) {
-                                if (buffer.length() > bufferSize){
+                                StringBuilder buffer = new StringBuilder();
+                                /*if (buffer.length() > bufferSize){
                                     try {
                                         long startWrite = System.currentTimeMillis();
                                         writer_.write(buffer);
@@ -54,7 +60,7 @@ public class NumGenerator extends Thread{
                                         e.printStackTrace();
                                     }
                                     buffer = new StringBuilder();
-                                }
+                                }*/
 
                                 buffer.append(firstLetter);
                                 if (number < 10) buffer.append("00");
@@ -66,15 +72,20 @@ public class NumGenerator extends Thread{
                                 if (regionCode < 10) buffer.append("0");
                                 buffer.append(regionCode)
                                         .append('\n');
+                                try {
+                                    writer_.write(buffer);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
             }
-            try {
+            /*try {
                 writer_.write(buffer);
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
             if (localWriter) {
                 try {
                     writer_.flushWriter();

@@ -10,8 +10,8 @@ public class Loader
 {
     public static void main(String[] args) throws Exception {
         //baseLoader();
-        optimizeLoader();
-        //moreOptimizeLoader();
+        //optimizeLoader();
+        moreOptimizeLoader();
     }
 
     private static void baseLoader() throws Exception{
@@ -96,7 +96,8 @@ public class Loader
         char letters[] = {'У', 'К', 'Е', 'Н', 'Х', 'В', 'А', 'Р', 'О', 'С', 'М', 'Т'};
         for(int number = 1; number < 1000; number++)
         {
-            int regionCode = 199;
+            //int regionCode = 199;
+            for (int regionCode = 100; regionCode < 110; regionCode++)
             for (char firstLetter : letters)
             {
                 for (char secondLetter : letters)
