@@ -1,10 +1,11 @@
 package module_13.Lessons_.res;
 
+import Utils.ConsoleColor;
+import Utils.MyUtils;
 import module_13.Lessons_.Lesson_3;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.io.IOException;
 
 public class MyFileEditor {
     private JPanel rootPanel;
@@ -14,7 +15,8 @@ public class MyFileEditor {
     private JButton chooseFileButton;
     private JPanel bottomPanel;
     private JTextArea textArea;
-    private JScrollBar scrollBar1;
+    private JScrollBar scrollBarLocal;
+    private JScrollBar scrollBarGlobal;
     private Lesson_3 lesson_3;
     private int oldScrollValue = 0;
 
@@ -33,47 +35,77 @@ public class MyFileEditor {
                 int ret = fileOpen.showDialog(null, "Открыть файл");
                 System.out.println(fileOpen.getSelectedFile());
                 myWrapperFile.setFile(fileOpen.getSelectedFile());
-                scrollBar1.setMaximum((int)myWrapperFile.getFileLength());
+                scrollBarLocal.setMaximum((int)myWrapperFile.getFileLength());
                 updateTextArea();
+                textArea.setText(myWrapperFile.getBufferedDataByGlobalPercent(0));
+                scrollBarGlobal.setMaximum((int)myWrapperFile.getFileLength());
+                scrollBarGlobal.setValue((int)myWrapperFile.getCurrentPosition());
+                scrollBarLocal.setValue(0);
             }
         });
-        scrollBar1.addAdjustmentListener(new AdjustmentListener() {
+        /** управление локальным скролом*/
+        scrollBarLocal.addAdjustmentListener(new AdjustmentListener() {
             @Override
             public void adjustmentValueChanged(AdjustmentEvent e) {
-                System.out.print(e.getValue() + "|");
-                System.out.print(e.getValueIsAdjusting() + "|"); // true - если двигаем мышью, false - если тыкаем на стрелки
-                System.out.print(e.getAdjustable().getMinimum() + ":" + e.getAdjustable().getMaximum() + ", source:" + e.getSource());
+                System.out.print(ConsoleColor.setColor("Local :", ConsoleColor.ANSI_YELLOW) + e.getValue() + "|"
+                        + e.getValueIsAdjusting() + "|" // true - если двигаем мышью, false - если тыкаем на стрелки
+                        + e.getAdjustable().getMinimum() + ":" + e.getAdjustable().getMaximum());
 
                 int percent = e.getValue() * 100 /
-                        ((scrollBar1.getMaximum() - scrollBar1.getVisibleAmount())>0?(scrollBar1.getMaximum() - scrollBar1.getVisibleAmount()):1);
+                        ((scrollBarLocal.getMaximum() - scrollBarLocal.getVisibleAmount())>0?(scrollBarLocal.getMaximum() - scrollBarLocal.getVisibleAmount()):1);
 
-                // полный ход scrollBar1.getMaximum() - scrollBar1.getVisibleAmount()
-                System.out.println(", max: " + scrollBar1.getVisibleAmount() + ", (" + percent + ")%");
+                // полный ход scrollBarLocal.getMaximum() - scrollBarLocal.getVisibleAmount()
+                System.out.println(", visible: " + scrollBarLocal.getVisibleAmount() + ", (" + percent + ")%");
 
                 if (!myWrapperFile.isHasFile()) return;
-                if (e.getValueIsAdjusting()){
+                // e.getValueIsAdjusting() // кнопки или бегунок
                     // глобальное чтение
-                    try {
-                        textArea.setText(myWrapperFile.getBufferedDataByGlobalPercent(percent));
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
+                    //textArea.setText(myWrapperFile.getBufferedDataByGlobalPercent(percent));
+                    //scrollBarGlobal.setValue((int)myWrapperFile.getCurrentPosition());
+                // локальное чтение
+                long currentPos = myWrapperFile.getCurrentPosition();
+
+                if (e.getValue() > oldScrollValue || (e.getValue() == 0 && oldScrollValue == 0)){
+                    if (scrollBarGlobal.getValue() < scrollBarGlobal.getMaximum()) {
+                        //scrollBarGlobal.setValue(scrollBarGlobal.getValue() + 1);
                     }
-                } else {
-                    // локальное чтение
-                    long currentPos = myWrapperFile.getCurrentPosition();
-                    try {
-                        if (e.getValue() > oldScrollValue || (e.getValue() == 0 && oldScrollValue == 0))
-                            textArea.setText(myWrapperFile.getBufferedDataByInc());
-                        else
-                            textArea.setText(myWrapperFile.getBufferedDataByDec());
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
+                }
+                else{
+                    if (scrollBarGlobal.getValue() > 0){
+                        //scrollBarGlobal.setValue(scrollBarGlobal.getValue() - 1);
                     }
                 }
                 oldScrollValue = e.getValue();
-                //scrollBar1.setMaximum((int)myWrapperFile.getFileLength());
-                //scrollBar1.setValue((int)myWrapperFile.getCurrentPosition());
-                //scrollBar1.setValue((int)(myWrapperFile.getCurrentPosition()*scrollBar1.getMaximum()/myWrapperFile.getFileLength()));
+            }
+        });
+        /** управление глобальным скролом*/
+        scrollBarGlobal.addAdjustmentListener(new AdjustmentListener() {
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                System.out.print(ConsoleColor.setColor("Global:", ConsoleColor.ANSI_RED) + e.getValue() + "|"
+                        + e.getValueIsAdjusting() + "|" // true - если двигаем мышью, false - если тыкаем на стрелки
+                        + e.getAdjustable().getMinimum() + ":" + e.getAdjustable().getMaximum());
+                //System.out.println();
+
+                int percent = e.getValue() * 100 /
+                        ((scrollBarGlobal.getMaximum() - scrollBarGlobal.getVisibleAmount())>0?(scrollBarGlobal.getMaximum() - scrollBarGlobal.getVisibleAmount()):1);
+                System.out.println(", visible: " + scrollBarLocal.getVisibleAmount() + ", (" + percent + ")%");
+                if (!myWrapperFile.isHasFile()) return;
+
+                myWrapperFile.updateBuffer(e.getValue());
+
+                textArea.setText(myWrapperFile.getBufferedDataByGlobalPercent(percent));
+                //scrollBarGlobal.setValue((int)myWrapperFile.getCurrentPosition());
+            }
+        });
+        textArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                /** TODO: будем смотреть если был ввод текста, или какое-то изменение, то нужно будет перед загрузкой нового буфера спросить
+                 * нужно ли это сохранить, и после вставить текущий буфер в currentPosition позицию.
+                 * если это получится, то почистить код.
+                 */
             }
         });
     }
