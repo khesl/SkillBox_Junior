@@ -32,29 +32,14 @@ public class MyWrapperFile {
     public boolean isHasFile(){ return hasFile; }
     public long getCurrentPosition(){ return currentPosition; }
 
-    /*private void updateBuffer(long position) throws IOException {
-        if (position < 0) position = 0;
-        if (position > getFileLenght()) position = getFileLenght()- bufferSize;
-        Path filePath = Paths.get(file.getPath());
-        FileChannel readChannel = FileChannel.open(filePath);
-        ByteBuffer readBuffer = ByteBuffer.allocate(bufferSize);
-
-        while(readBuffer.position() < readBuffer.limit()) {
-            int noOfBytesRead = readChannel.read(readBuffer, position);
-            if (noOfBytesRead > 0) position++;
-            if (position > getFileLenght()) break;
-        }
-        currentPosition = position;
-        readChannel.close();
-        buffer = readBuffer;
-    }*/
-    public synchronized void updateBuffer(long position) {
+    public synchronized int updateBuffer(long position) {
         try {
-            if (position <= 0) position = 1;
+            if (position <= 0) position = 0;
+            if (position + new String(buffer.array()).trim().length() >= getFileLength()) return -1;
 
             if (position > getFileLength()) position = getFileLength() - bufferSize;
             //Path filePath = Paths.get(file.getPath());
-            RandomAccessFile aFile = new RandomAccessFile(file.getPath(), "r");
+            RandomAccessFile aFile = new RandomAccessFile(file.getPath(), "rw");
             FileChannel readChannel = aFile.getChannel();
             ByteBuffer readBuffer = ByteBuffer.allocate(bufferSize);
 
@@ -64,9 +49,25 @@ public class MyWrapperFile {
             if (position > getFileLength()) position = getFileLength();
 
             currentPosition = position;
-            System.out.print(" currentPosition: (" + currentPosition + "), ");
+            System.out.println(" currentPosition: (" + currentPosition + "), ");
             readChannel.close();
             buffer = readBuffer;
+            return noOfBytesRead;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public void writeToFile(ByteBuffer buffer){
+        try {
+        RandomAccessFile aFile = new RandomAccessFile(file.getPath(), "w");
+        FileChannel readChannel = aFile.getChannel();
+        ByteBuffer readBuffer = ByteBuffer.allocate(bufferSize);
+
+        int noOfBytesWritten = readChannel.write(buffer, currentPosition);
+        System.out.print(" noOfBytesWritten: " + noOfBytesWritten);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,13 +78,12 @@ public class MyWrapperFile {
     public String getBufferedDataByGlobalPercent(int percentage) {
         System.out.print("start getBufferedDataByGlobalPercent - " + percentage);
         int oldPosition = buffer.position();
+        int loadBytes = 0;
         if (currentPosition > 0 && currentPosition < getFileLength()) {
+            loadBytes = updateBuffer(currentPosition * percentage / 100 - bufferSize / 2);
+        } else if (currentPosition == 0) loadBytes = updateBuffer(0);
 
-            updateBuffer(currentPosition * percentage / 100 - bufferSize / 2);
-
-        } else if (currentPosition == 0) updateBuffer(0);
-
-        buffer.position(buffer.capacity() / 4);
+        buffer.position(loadBytes / 4);
         byte[] bytes = buffer.array();
         String output = new String(bytes).trim();
         System.out.println(" , " + output.length());

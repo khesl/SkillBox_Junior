@@ -34,6 +34,7 @@ public class TreeLinks {
     public List<TreeLinks> getInsideLinks() { return insideLinks; }
     public void setInsideLinks(List<TreeLinks> insideLinks) { this.insideLinks = insideLinks; }
     public void addInsideLinks(TreeLinks link) { this.insideLinks.add(link); }
+    public boolean isInsideLinksEmpty() { return insideLinks.size() == 0; }
 
     @Override
     public String toString(){

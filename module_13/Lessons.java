@@ -8,8 +8,9 @@ import java.io.IOException;
 public class Lessons {
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        lesson_2();
-        //lesson_3();
+        //lesson_2();
+        lesson_3();
+        //lesson_4();
     }
 
     private static void lesson_2() throws IOException, InterruptedException {
@@ -21,7 +22,7 @@ public class Lessons {
 
         /**
          * задание выполнено в отдельном файле по уроку
-         * module_13.Lessons_.Lesson_2
+         * {@link module_13.Lessons_.Lesson_2}
          * */
         Lesson_2 less = new Lesson_2();
         less.lesson_2(0, 10, 10);
@@ -34,8 +35,12 @@ public class Lessons {
         //- Написать просмотрщик (или, лучше, редактор) больших файлов. Он должен уметь просматривать
         // файлы любого размера, не занимая при этом много оперативной памяти. Для примера файла можно
         // использовать файл размером 1,5 Gb, имеющийся в проекте VoteAnalyzer.
-        Lesson_3 less = new Lesson_3();
 
+        /**
+         * задание выполнено в отдельном файле по уроку
+         * {@link module_13.Lessons_.Lesson_3}
+         * */
+        Lesson_3 less = new Lesson_3();
         less.lesson_3();
     }
 

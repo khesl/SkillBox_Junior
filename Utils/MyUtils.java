@@ -110,7 +110,7 @@ public class MyUtils {
      * @param link  - url ссылка на сайт
      * @param path  - путь загрузки кода страницы
      * */
-    public static boolean downloadUrl(String link, String path) throws IOException {
+    public static boolean downloadUrl(String link, String path) {
         try {
             URL url = new URL(link);
 
@@ -131,6 +131,7 @@ public class MyUtils {
 
             fos.flush();
             fos.close();
+
         } catch (Exception e){
             //throw new IOException("trouble with: '" + link + "'");
             return false;

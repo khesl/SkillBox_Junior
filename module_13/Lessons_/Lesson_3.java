@@ -10,7 +10,6 @@ public class Lesson_3 {
 
     public static void main(String[] args) {
         Lesson_3 less = new Lesson_3();
-
         less.lesson_3();
 
     }
