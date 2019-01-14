@@ -25,17 +25,15 @@ public class MyHttpScanner extends Thread{
     @Override
     public void run(){
         while(!interrupted()){
-            if (treeLink.isInsideLinksEmpty()){
+            //if (treeLink.isInsideLinksEmpty()){
+            if (freeScanner && !finishResult){
+                freeScanner = false;
                 long start = System.currentTimeMillis();
                 MyUtils.downloadUrl(treeLink.getHref(), filePath);
-                System.out.print("download time (" + (System.currentTimeMillis() - start) + " ms)");
                 treeLink = parseHttpCode(filePath, treeLink);
-
+                finishResult = true;
+                System.out.print("download time (" + (System.currentTimeMillis() - start) + " ms)");
             }
-                for (TreeLinks childLink : treeLink.getInsideLinks()) {
-                    // прогружаем для потомка.
-                }
-
         }
     }
 
@@ -58,8 +56,10 @@ public class MyHttpScanner extends Thread{
         return null;
     }
 
-    public TreeLinks getTreeLink(){
+    public TreeLinks getTreeLink() throws NoSuchFieldException {
+        if (!finishResult) throw new NoSuchFieldException("Finish data is not present!");
         finishResult = false;
+        freeScanner = true;
         return treeLink;
     }
 }
