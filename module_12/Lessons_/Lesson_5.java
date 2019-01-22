@@ -2,6 +2,8 @@ package module_12.Lessons_;
 
 import Utils.ConsoleColor;
 import Utils.MyUtils;
+import module_12.Lessons_.src.MyHttpScanner;
+import module_12.Lessons_.src.MyHttpScannerController;
 import module_12.Lessons_.src.TreeLinks;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,11 +22,14 @@ import java.util.regex.Pattern;
 public class Lesson_5 {
 
     public static void main(String[] args) throws IOException {
-        Lesson_5 less = new Lesson_5();
-        //TreeLinks links = less.FillTreeLinks("https://docs.oracle.com/en/");
-        //TreeLinks links = less.FillTreeLinks("https://lenta.ru/");
-        TreeLinks links = less.FillTreeLinks_v2(0,"https://lenta.ru/", "https://lenta.ru/");
-        System.out.println("loaded http map:\n" + links.toAllString());
+        //Lesson_5 less = new Lesson_5();
+        ////TreeLinks links = less.FillTreeLinks("https://docs.oracle.com/en/");
+        ////TreeLinks links = less.FillTreeLinks("https://lenta.ru/");
+        //TreeLinks links = less.FillTreeLinks_v2(0,"https://lenta.ru/", "https://lenta.ru/");
+        //System.out.println("loaded http map:\n" + links.toAllString());
+
+        MyHttpScannerController mhsc = new MyHttpScannerController(new TreeLinks(0, "https://lenta.ru/","https://lenta.ru/"));
+        mhsc.parseLink();
     }
 
     private volatile Map<Integer, TreeLinks> links = new HashMap<>();
@@ -173,7 +178,7 @@ public class Lesson_5 {
     }
 
 
-    /** так, допустим это последняя ревизия проекта.
+    /** так, допустим это последняя ревизия проекта. на тот момент примерно 01.10.2019
      * мне нужно переделать эту функцию под поток. убрать рекурсивность, она просто собирает в главный set ссылки
      * и возвращает текущий список по сайту. Далее управление перехватит Main функция и раскидает этот список
      * по доступным потокам. да, возможно будет while, чтобы идти в глубь, либо ограничиться 4-5 (n) уровнями

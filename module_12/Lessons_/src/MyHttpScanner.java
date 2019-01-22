@@ -37,7 +37,7 @@ public class MyHttpScanner extends Thread{
         }
     }
 
-    private static TreeLinks parseHttpCode(String path, TreeLinks treeLink){
+    public static TreeLinks parseHttpCode(String path, TreeLinks treeLink){
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
