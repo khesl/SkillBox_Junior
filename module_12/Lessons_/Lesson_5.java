@@ -21,15 +21,15 @@ import java.util.regex.Pattern;
 /** 12 модуль */
 public class Lesson_5 {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, NoSuchFieldException, InterruptedException {
         //Lesson_5 less = new Lesson_5();
         ////TreeLinks links = less.FillTreeLinks("https://docs.oracle.com/en/");
         ////TreeLinks links = less.FillTreeLinks("https://lenta.ru/");
         //TreeLinks links = less.FillTreeLinks_v2(0,"https://lenta.ru/", "https://lenta.ru/");
         //System.out.println("loaded http map:\n" + links.toAllString());
 
-        MyHttpScannerController mhsc = new MyHttpScannerController(new TreeLinks(0, "https://lenta.ru/","https://lenta.ru/"));
-        mhsc.parseLink();
+        //MyHttpScannerController mhsc = new MyHttpScannerController(new TreeLinks(0, "https://lenta.ru/","https://lenta.ru/"));
+        //
     }
 
     private volatile Map<Integer, TreeLinks> links = new HashMap<>();

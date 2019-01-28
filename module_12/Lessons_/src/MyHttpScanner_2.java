@@ -26,6 +26,7 @@ public class MyHttpScanner_2 extends Thread{
     private volatile boolean finishResult = false; // выполнен и есть готовые данные
     private volatile Map<Integer, TreeLinks> links = new HashMap<>();
     private String scannerName;
+    private boolean isDebugMode = false;
 
     public MyHttpScanner_2(TreeLinks treeLink, String filePath, String scannerName){
         this.treeLink = treeLink;
@@ -47,14 +48,25 @@ public class MyHttpScanner_2 extends Thread{
         while(!interrupted()){
             //if (treeLink.isInsideLinksEmpty()){
             if (freeScanner && !finishResult){
-                freeScanner = false;
-                long start = System.currentTimeMillis();
-                MyUtils.downloadUrl(treeLink.getHref(), filePath);
-                treeLink = parseHttpCode(filePath, treeLink);
-                finishResult = true;
-                System.out.print("download time (" + (System.currentTimeMillis() - start) + " ms)");
+                try {
+                    freeScanner = false;
+                    long start = System.currentTimeMillis();
+                    MyUtils.downloadUrl(treeLink.getHref(), filePath);
+                    //treeLink = parseHttpCode(filePath, treeLink);
+                    treeLink = FillTreeLinks_v2();
+
+                    finishResult = true;
+                    System.out.print("download time (" + (System.currentTimeMillis() - start) + " ms)");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
+    }
+
+    public String getStatus(){
+        if (!freeScanner) return ConsoleColor.setColor("processing: load file (" + (new File(filePath)).length() + " byte), loading: '" + treeLink.getHref() + "'", ConsoleColor.ANSI_YELLOW);
+        return ConsoleColor.setColor("thread is free.", ConsoleColor.ANSI_YELLOW);
     }
 
     private static TreeLinks parseHttpCode(String path, TreeLinks treeLink){
@@ -114,23 +126,23 @@ public class MyHttpScanner_2 extends Thread{
         for (Element element : elements) {
             // для каждого элемента будем пробегать внутрь
             String src = element.attr("href");
-            System.out.println(deep + ":" + "parent: '" + link + "'");
-            System.out.print("\telement.attr(\"href\"): '" + src + "'");
+            if (isDebugMode) System.out.println(deep + ":" + "parent: '" + link + "'");
+            if (isDebugMode) System.out.print("\telement.attr(\"href\"): '" + src + "'");
 
             //была ли уже такая ссылка?
             if (MyHttpScannerController.getUniqueLinks().containsKey(src)){
                 TreeLinks child = new TreeLinks(deep + 1, rootLink, src);
                 child.setInsideLinks(MyHttpScannerController.getUniqueLinks().get(src).getInsideLinks());
-                System.out.println(deep + ":" + "link " + child + " was inspected before.");
+                if (isDebugMode) System.out.println(deep + ":" + "link " + child + " was inspected before.");
                 treeLinks.addInsideLinks(child);
                 continue;
             }
 
-            if (src.equals("/") || src.equals("#") || src.equals("index.html")) { System.out.println(deep + ":" + ConsoleColor.setColor("\titself ", ConsoleColor.ANSI_RED)); continue; }
+            if (src.equals("/") || src.equals("#") || src.equals("index.html")) { if (isDebugMode)  System.out.println(deep + ":" + ConsoleColor.setColor("\titself ", ConsoleColor.ANSI_RED)); continue; }
             if (src.length() == 0) continue;
-            if (Pattern.compile("^#{1}.+$").matcher(src).matches()) { System.out.println(deep + ":" + ConsoleColor.setColor("\tmenu links ", ConsoleColor.ANSI_RED)); continue; }
+            if (Pattern.compile("^#{1}.+$").matcher(src).matches()) {if (isDebugMode) System.out.println(deep + ":" + ConsoleColor.setColor("\tmenu links ", ConsoleColor.ANSI_RED)); continue; }
             if (Pattern.compile("^\\.\\./.+$").matcher(src).matches()) {
-                System.out.println(deep + ":" + ConsoleColor.setColor("\tback links ", ConsoleColor.ANSI_RED));
+                if (isDebugMode) System.out.println(deep + ":" + ConsoleColor.setColor("\tback links ", ConsoleColor.ANSI_RED));
                 String link_ = link;
                 if (link_.contains(".html") || link_.contains(".htm")){
                     Matcher m = Pattern.compile("(^http[s]?://)(.+/)").matcher(link);
@@ -143,17 +155,17 @@ public class MyHttpScanner_2 extends Thread{
                 TreeLinks child = new TreeLinks(deep + 1, rootLink, src);
                 //links.put(getLinksKey(), child);
                 MyHttpScannerController.putUniqueLinks(child.getHref(), child);
-                System.out.println(deep + ":" + "add link, deep \t(" + (deep + 1) + ")" + child);
+                if (isDebugMode) System.out.println(deep + ":" + "add link, deep \t(" + (deep + 1) + ")" + child);
                 treeLinks.addInsideLinks(child);
                 continue;
             }
             //if (!Pattern.compile("^.+/{1}$").matcher(link).matches() && !Pattern.compile("^/{1}.+$").matcher(src).matches()) src = "/" + src;
             if ((link.contains(".html") || link.contains(".htm")) && (src.contains(".html") || src.contains(".htm"))) {
                 // переход внутри?
-                System.out.println(deep + ":" + link + "|||" + src);
+                if (isDebugMode)  System.out.println(deep + ":" + link + "|||" + src);
                 Matcher m = Pattern.compile("(^http[s]?://)(.+/)").matcher(link);
                 while (m.find()) { link = m.group(0); }
-                System.out.println(deep + ":" + "new link: '" + link + "'");
+                if (isDebugMode)  System.out.println(deep + ":" + "new link: '" + link + "'");
                 //если проход во внуть, то нужно вернуться?
                 // но сначала добавить в карту
                 if (!src.contains("https:") && !src.contains("http:")){
@@ -163,17 +175,17 @@ public class MyHttpScanner_2 extends Thread{
                 TreeLinks child = new TreeLinks(deep + 1, rootLink, src);
                 //links.put(getLinksKey(), child);
                 MyHttpScannerController.putUniqueLinks(child.getHref(), child);
-                System.out.println("add link, deep \t(" + (deep + 1) + ")" + child);
+                if (isDebugMode) System.out.println("add link, deep \t(" + (deep + 1) + ")" + child);
                 treeLinks.addInsideLinks(child);
                 continue;
             }
-            System.out.println("");
+            if (isDebugMode) System.out.println("");
             if (src.contains(".html") || src.contains(".htm")) {
                 // вкладка?
                 TreeLinks child = new TreeLinks(deep + 1, rootLink, src);
                 //links.put(getLinksKey(), child);
                 MyHttpScannerController.putUniqueLinks(child.getHref(), child);
-                System.out.println(deep + ":" + "add link, deep \t(" + (deep + 1) + ")" + child);
+                if (isDebugMode) System.out.println(deep + ":" + "add link, deep \t(" + (deep + 1) + ")" + child);
                 continue;
             }
 
@@ -195,15 +207,15 @@ public class MyHttpScanner_2 extends Thread{
                     String temp = m.group(1);
                     String temp_ = "";
                     if (temp.substring(temp.length()-1, temp.length()).equals("/")) temp_ = temp.substring(0, temp.length()-1);
-                    System.out.println(deep + ":" + "src :" + src);
-                    System.out.println(deep + ":" + "temp:" + temp + "\t" + temp_);
-                    System.out.println(deep + ":" + "link:" + link);
+                    if (isDebugMode) System.out.println(deep + ":" + "src :" + src);
+                    if (isDebugMode) System.out.println(deep + ":" + "temp:" + temp + "\t" + temp_);
+                    if (isDebugMode) System.out.println(deep + ":" + "link:" + link);
                     if (link.equals(temp) || link.equals(temp_)) restExist  = true;
                 }
-                if (restExist) {  System.out.println(ConsoleColor.setColor(deep + ":" + "\trest itself", ConsoleColor.ANSI_RED)); continue; }
+                if (restExist) { if (isDebugMode) System.out.println(ConsoleColor.setColor(deep + ":" + "\trest itself", ConsoleColor.ANSI_RED)); continue; }
             }
 
-            System.out.println(deep + ":" + "next resource: '" + src + "'");
+            if (isDebugMode) System.out.println(deep + ":" + "next resource: '" + src + "'");
 
             if (isLinkContain(src)) continue;
 
@@ -211,9 +223,9 @@ public class MyHttpScanner_2 extends Thread{
             TreeLinks child = new TreeLinks(deep + 1, rootLink, src);
             //links.put(key, child);
             MyHttpScannerController.putUniqueLinks(child.getHref(), child);
-            System.out.println(deep + ":" + "add link, deep \t(" + (deep + 1) + ")" + child);
+            if (isDebugMode) System.out.println(deep + ":" + "add link, deep \t(" + (deep + 1) + ")" + child);
             // не заходим внутрь если не из базового домена
-            System.out.println(deep + ":" + "update link, deep \t(" + (deep + 1) + ")" + child);
+            if (isDebugMode) System.out.println(deep + ":" + "update link, deep \t(" + (deep + 1) + ")" + child);
             treeLinks.addInsideLinks(child);
         }
         System.out.println(deep + ":" + "and back ^ to (" + (deep-1) + ")");
@@ -252,6 +264,10 @@ public class MyHttpScanner_2 extends Thread{
 
     public String getScannerName() {
         return scannerName;
+    }
+
+    public String toString(){
+        return "ScanName:'" + getScannerName() + "', isFreeScanner:'" + isFreeScanner() + "', isFinishResult:'" + isFinishResult() + "'";
     }
 
 }

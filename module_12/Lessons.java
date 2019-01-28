@@ -23,7 +23,8 @@ public class Lessons {
         //System.out.println(less.stopWatchClass.getFormattedTime(new SimpleDateFormat("HH:mm:ss.S")));
 
         //less.Lesson_2();
-        Lesson_6();
+        less.Lesson_5();
+        //Lesson_6();
     }
 
     private JFrame frame;
